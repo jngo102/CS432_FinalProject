@@ -1,7 +1,7 @@
 class Camera {
     static current = null;
 
-    constructor(vrp, u, v, n, near, far) {
+    constructor(vrp, u, v, n, fov, aspectRatio, near, far) {
         this.vrp = vrp;
         this.u = normalize(u);
         this.v = normalize(v);
@@ -9,7 +9,7 @@ class Camera {
         this.near = near;
         this.far = far;
 
-        this.projectionMatrix = perspective(45, 1, this.near, this.far);
+        this.projectionMatrix = perspective(fov, aspectRatio, this.near, this.far);
 
         this.setCurrent();
 

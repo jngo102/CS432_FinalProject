@@ -1,15 +1,15 @@
 class InputManager {
-    static instance;
-
-    constructor(window, inputActions) {
-        instance = this;
+    constructor(window, inputActions, mouseSensitivity) {
         this.window = window;
         this.inputActions = inputActions;
+        this.mouseVector = vec2(0, 0);
+        this.mouseSensitivity = mouseSensitivity
+
         this.setupInput();
     }
 
     setupInput() {
-        this.window.on("keydown", (event) => {
+        this.window.addEventListener("keydown", (event) => {
             switch (event.code) {
                 case this.inputActions.left.key:
                     this.inputActions.left.isPressed = true;
@@ -34,7 +34,7 @@ class InputManager {
             }
         });
 
-        this.window.on("keyup", (event) => {
+        this.window.addEventListener("keyup", (event) => {
             switch (event.code) {
                 case this.inputActions.left.key:
                     this.inputActions.left.isPressed = false;
@@ -58,9 +58,15 @@ class InputManager {
                     break;
             }
         });
+
+        this.window.addEventListener("mousemove", (event) => {
+            this.mouseVector = vec2(event.movementX * this.mouseSensitivity, event.movementY * this.mouseSensitivity);
+        });
     }
 
     update(deltaTime) {
+        this.mouseVector = vec2(0, 0);
+
         if (this.inputActions.left.wasPressed) {
             this.inputActions.left.wasPressed = false;
         }

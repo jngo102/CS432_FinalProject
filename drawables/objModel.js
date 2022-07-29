@@ -1,5 +1,3 @@
-const OBJFile = require("../objFile");
-
 class ObjModel extends Drawable {
     texture = null;
     

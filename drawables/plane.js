@@ -1,12 +1,12 @@
 class Plane extends Drawable {
-    constructor(transform, scale, rotation, colors) {
-        super(transform[0], transform[1], transform[2], scale, rotation[0], rotation[1], rotation[2], colors);
+    constructor(transform, scale, rotation, textureSource, colors, amb, dif, sp, sh) {
+        super(transform[0], transform[1], transform[2], scale, rotation[0], rotation[1], rotation[2], colors, amb, dif, sp, sh);
         if (this.shaderProgram == -1) {
-            this.initialize();
+            this.initialize(textureSource);
         }
     }
 
-    initialize() {
+    initialize(textureSource) {
         this.vertexPositions = [
             vec3(-1, 0, 1),
             vec3(1, 0, 1),
@@ -19,31 +19,14 @@ class Plane extends Drawable {
             0, 2, 3
         ];
 
-        this.setupGL();
-    }
+        this.vertexTextureCoordinates = [
+            vec2(0, 0),
+            vec2(1, 0),
+            vec2(1, 1),
+            vec2(0, 1),
+        ];
 
-    draw() {
-        gl.useProgram(this.shaderProgram);
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
-        gl.vertexAttribPointer(this.positionShader, 3, gl.FLOAT, false, 0, 0);
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
-        gl.vertexAttribPointer(this.colorShader, 4, gl.FLOAT, false, 0, 0);
-
-        gl.uniformMatrix4fv(this.modelMatrixShader, false, flatten(this.modelMatrix));
-        gl.uniformMatrix4fv(this.cameraMatrixShader, false, flatten(Camera.current.cameraMatrix));
-        gl.uniformMatrix4fv(this.projectionMatrixShader, false, flatten(Camera.current.projectionMatrix));
-
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-
-        gl.enableVertexAttribArray(this.positionShader);
-        gl.enableVertexAttribArray(this.colorShader);
-
-        gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0);
-
-        gl.disableVertexAttribArray(this.positionShader);
-        gl.disableVertexAttribArray(this.colorShader);
+        this.setupTexture(textureSource);
     }
 }
 
