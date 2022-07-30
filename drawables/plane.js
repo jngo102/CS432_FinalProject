@@ -19,7 +19,7 @@ class Plane extends Drawable {
             0, 2, 3
         ];
 
-        this.vertexTextureCoordinates = [
+        this.texCoords = [
             vec2(0, 0),
             vec2(1, 0),
             vec2(1, 1),

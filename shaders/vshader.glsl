@@ -2,7 +2,7 @@
 
 in vec3 position, normal;
 in vec4 color;
-in vec2 textureCoord;
+in vec2 texCoord;
 
 uniform mat4 modelMatrix, cameraMatrix, projectionMatrix;
 
@@ -13,7 +13,7 @@ uniform vec3 lightDirection;
 uniform vec4 lightAmbient, lightDiffuse, lightSpecular;
 
 out vec4 vColor;
-out vec2 vTextureCoord;
+out vec2 vtexCoord;
 
 void main()
 {
@@ -43,5 +43,5 @@ void main()
     lightColor.a = 1.0;
     
     vColor = 0.1 * color + 0.9 * lightColor;
-    vTextureCoord = textureCoord;
+    vtexCoord = texCoord;
 }
