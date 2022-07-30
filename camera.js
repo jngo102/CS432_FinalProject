@@ -1,4 +1,6 @@
+/// Allows viewing of objects in a scene
 class Camera {
+    // The active camera
     static current = null;
 
     constructor(vrp, u, v, n, fov, aspectRatio, near, far) {
@@ -16,6 +18,7 @@ class Camera {
         this.updateCameraMatrix();
     }
 
+    // Look at a point in space
     lookAt(target) {
         this.cameraMatrix = lookAt(this.vrp, target, vec3(0, 1, 0));
     }
@@ -24,6 +27,7 @@ class Camera {
         Camera.current = this;
     }
 
+    // Move the camera
     translate(x, y, z) {
         this.vrp = add(this.vrp, mult(x, this.u));
         this.vrp = add(this.vrp, mult(y, this.v));

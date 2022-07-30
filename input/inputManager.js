@@ -1,3 +1,4 @@
+/// Handles inputs from keyboard and mouse
 class InputManager {
     constructor(window, inputActions, mouseSensitivity) {
         this.window = window;
@@ -9,6 +10,7 @@ class InputManager {
     }
 
     setupInput() {
+        // Key press
         this.window.addEventListener("keydown", (event) => {
             switch (event.code) {
                 case this.inputActions.left.key:
@@ -34,6 +36,7 @@ class InputManager {
             }
         });
 
+        // Key release
         this.window.addEventListener("keyup", (event) => {
             switch (event.code) {
                 case this.inputActions.left.key:
@@ -59,11 +62,13 @@ class InputManager {
             }
         });
 
+        // Mouse motion
         this.window.addEventListener("mousemove", (event) => {
             this.mouseVector = vec2(event.movementX * this.mouseSensitivity, event.movementY * this.mouseSensitivity);
         });
     }
 
+    // Update the input managed every frame
     update(deltaTime) {
         this.mouseVector = vec2(0, 0);
 

@@ -1,6 +1,7 @@
+/// Controller for the main camera given provided inputs
 class CameraController {
-    constructor(camera, inputManager) {
-        this.camera = camera;
+    constructor(inputManager) {
+        this.camera = Camera.current;
         this.inputManager = inputManager;
 
         this.yaw = 0;
@@ -10,9 +11,11 @@ class CameraController {
         this.moveSpeed = 5;
     }
 
+    // Update the camera every frame
     update(deltaTime) {
         this.yaw += (this.inputManager.mouseVector[0] * deltaTime) % 360;
-        this.pitch += (this.inputManager.mouseVector[1] * deltaTime).clamp(-80, 80);
+        this.pitch += this.inputManager.mouseVector[1] * deltaTime;
+        this.pitch = this.pitch.clamp(-80, 80);
 
         this.moveVector = vec2(0, 0);
         if (this.inputManager.inputActions.left.isPressed) {

@@ -1,3 +1,4 @@
+/// Base class for renderable objects
 class Drawable {
     shaderProgram = -1;
     flatShaderProgram = -1;
@@ -6,6 +7,10 @@ class Drawable {
     vertexPositions = [];
     positionBuffer = -1;
     positionShader = -1;
+
+    vertexColors = [];
+    colorBuffer = -1;
+    colorShader = -1;
 
     indices = [];
     indexBuffer = -1;
@@ -18,7 +23,7 @@ class Drawable {
     textureCoordinateBuffer = -1;
     textureCoordinateShader = -1;
     textureUnitShader = -1;
-    texture = null;
+    material = null;
 
     modelMatrixShader = null;
 
@@ -32,7 +37,7 @@ class Drawable {
     lightDiffuseShader = -1;
     lightSpecularShader = -1;
 
-    constructor(tx, ty, tz, scale, rotX, rotY, rotZ, colors, amb, dif, sp, sh) {
+    constructor(tx, ty, tz, scale, rotX, rotY, rotZ) {
         this.tx = tx;
         this.ty = ty;
         this.tz = tz;
@@ -40,12 +45,6 @@ class Drawable {
         this.rotX = rotX;
         this.rotY = rotY;
         this.rotZ = rotZ;
-        this.vertexColors = colors;
-
-        this.matAmbient = amb;
-        this.matDiffuse = dif;
-        this.matSpecular = sp;
-        this.matAlpha = sh;
 
         this.updateModelMatrix();
     }
@@ -119,28 +118,25 @@ class Drawable {
         }
     }
 
-    setupTexture(imageSource) {
+    setupMaterial(texturePath, ambient, diffuse, specular, alpha) {
         var image = new Image();
 
         image.onload = () => {
-            this.texture = gl.createTexture();
-            gl.bindTexture(gl.TEXTURE_2D, this.texture);
+            var texture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, texture);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, image.width, image.height, 0, gl.RGB, gl.UNSIGNED_BYTE, image);
-            
+
             gl.generateMipmap(gl.TEXTURE_2D);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST_MIPMAP_NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
-            // Setup WebGL only after texture is loaded
-            this.setupGL();
+            this.material = new Material(texture, ambient, diffuse, specular, alpha);
         }
-        
-        image.src = imageSource;
+
+        image.src = texturePath;
     }
 
     setupGL() {
-        this.computeNormals();
-
         this.shaderProgram = initShaders(gl, "../shaders/vshader.glsl", "../shaders/fshader.glsl");
 
         this.positionBuffer = gl.createBuffer();
@@ -184,7 +180,7 @@ class Drawable {
     }
 
     draw(light) {
-        if (this.texture == null) {
+        if (this.material == null) {
             return;
         }
 
@@ -205,17 +201,17 @@ class Drawable {
        	gl.vertexAttribPointer(this.textureCoordinateShader, 2, gl.FLOAT, false, 0, 0 );
 
         gl.activeTexture(gl.TEXTURE0);
-       	gl.bindTexture(gl.TEXTURE_2D, this.texture);
+       	gl.bindTexture(gl.TEXTURE_2D, this.material.texture);
        	gl.uniform1i(this.textureUnitShader, 0);
 
         gl.uniformMatrix4fv(this.modelMatrixShader, false, flatten(this.modelMatrix));
         gl.uniformMatrix4fv(this.cameraMatrixShader, false, flatten(Camera.current.cameraMatrix));
         gl.uniformMatrix4fv(this.projectionMatrixShader, false, flatten(Camera.current.projectionMatrix));
 
-        gl.uniform4fv(this.matAmbientShader, this.matAmbient);
-        gl.uniform4fv(this.matDiffuseShader, this.matDiffuse);
-        gl.uniform4fv(this.matSpecularShader, this.matSpecular);
-        gl.uniform1f(this.matAlphaShader, this.matAlpha);
+        gl.uniform4fv(this.matAmbientShader, this.material.ambient);
+        gl.uniform4fv(this.matDiffuseShader, this.material.diffuse);
+        gl.uniform4fv(this.matSpecularShader, this.material.specular);
+        gl.uniform1f(this.matAlphaShader, this.material.alpha);
 
         if (light.status == 1) {
             gl.uniform3fv(this.lightDirectionShader, light.direction);
@@ -233,5 +229,14 @@ class Drawable {
         gl.disableVertexAttribArray(this.colorShader);
         gl.disableVertexAttribArray(this.normalShader);
         gl.disableVertexAttribArray(this.textureCoordinateShader);
+    }
+
+    async waitSetupGL() {
+        while (this.material == null) {
+            await new Promise(r => setTimeout(r, 10));
+        }
+
+        console.log("Setting up GL");
+        this.setupGL();
     }
 }

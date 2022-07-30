@@ -4,6 +4,7 @@ var gl;
 const FRAME_TIME = 1 / 60;
 var camera;
 var cameraController;
+var monkey;
 var plane;
 var sun;
 var inputManager;
@@ -13,6 +14,9 @@ window.onload = function init() {
     canvas.onclick = function() {
         canvas.requestPointerLock();
     }
+    // Resize canvas to fit window
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
     gl = canvas.getContext('webgl2');
     if (!gl) { alert("WebGL 2.0 isn't available"); }
 
@@ -21,22 +25,17 @@ window.onload = function init() {
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0, 0, 0, 1);
 
-    var amb = vec4(0.2, 0.2, 0.2, 1.0);
-    var dif = vec4(0.6, 0.1, 0.0, 1.0);
-    var spec = vec4(1.0, 1.0, 1.0, 1.0);
-    var shine = 100.0
+    monkey = new ObjModel(
+        "../models/monkey.obj", 
+        "../models/monkey.mtl",
+        vec3(0, 1.1, -5), 
+        1,
+        vec3(0, 0, 0));
     plane = new Plane(
         vec3(0, 0, 0), 
-        5, 
+        10, 
         vec3(0, 0, 0), 
-        "../textures/256x grass block.png", 
-        [
-            vec4(1, 1, 1, 1),
-            vec4(1, 1, 1, 1),
-            vec4(1, 1, 1, 1),
-            vec4(1, 1, 1, 1)
-        ],
-        amb, dif, spec, shine);
+        "../textures/256x grass block.png");
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
@@ -51,19 +50,30 @@ window.onload = function init() {
         new PlayerAction("KeyE")
     );
     inputManager = new InputManager(window, inputActions, 2);
-    cameraController = new CameraController(camera, inputManager);
+    cameraController = new CameraController(inputManager);
 
-    render();
+    update();
 };
 
-function render() {
+function update() {
     setTimeout(function () {
-        requestAnimationFrame(render);
+        requestAnimationFrame(update);
 
-        cameraController.update(FRAME_TIME);
-        inputManager.update(FRAME_TIME);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-        plane.draw(sun);
+        logic(FRAME_TIME);
+        render();
     }, FRAME_TIME);
+}
+
+// Update only script logic
+function logic(deltaTime) {
+    cameraController.update(deltaTime);
+    inputManager.update(deltaTime);
+}
+
+// Update only graphics
+function render() {
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    plane.draw(sun);
+    monkey.draw(sun);
 }
