@@ -9,7 +9,7 @@ class ObjModel extends Drawable {
 
     parseMtl(mtlPath) {
         var mtlFile = loadFileAJAX(mtlPath);
-        var mats = mtlFile.split('\n\n');
+        var mats = mtlFile.split('\r\n\r\nnewmtl ');
         mats.forEach((mat, matIndex) => {
             if (matIndex <= 0) {
                 return;
@@ -22,16 +22,15 @@ class ObjModel extends Drawable {
             var specular = vec4(1, 1, 1, 1);
             var alpha = 100;
             lines.forEach((line, index) => {
-                console.log("Index: " + index);
                 var tokens = line.trimRight().split(' ');
                 if (tokens[0].includes("#")) {
                     return;
                 }
+                if (index <= 0) {
+                    matName = tokens[0];
+                }
                 var command = tokens[0];
                 switch (command) {
-                    case "newmtl":
-                        matName = tokens[1];
-                        break;
                     case "Ns":
                         alpha = parseFloat(tokens[1]);
                         break;
@@ -56,7 +55,6 @@ class ObjModel extends Drawable {
 
             Material.createMaterial(matName, texturePath, ambient, diffuse, specular, alpha)
                     .then((material) => {
-                        this.materials.push(material);
                         for (var i = 0; i < this.materialsMap.length; i++) {
                             if (this.materialsMap[i].matName == material.name) {
                                 var vertices = this.materialsMap[i].vertices;

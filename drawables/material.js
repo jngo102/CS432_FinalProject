@@ -13,9 +13,7 @@ class Material {
         var material = null;
         var image = new Image();
 
-        console.log("Created image");
         image.onload = () => {
-            console.log("img load complete");
             var texture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, texture);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, image.width, image.height, 0, gl.RGB, gl.UNSIGNED_BYTE, image);
@@ -27,15 +25,12 @@ class Material {
             material = new Material(matName, texture, ambient, diffuse, specular, alpha);
         }
 
-        console.log("Set img src to " + texturePath);
         image.src = texturePath;
 
         while (material == null) {
-            console.log("Material: " + material);
             await new Promise(r => setTimeout(r, 10));
         }
 
-        console.log("Material: " + material);
         return material;
     }
 }

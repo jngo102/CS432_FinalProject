@@ -2,7 +2,6 @@
 class Drawable {
     shaderProgram = -1;
 
-    materials = [];
     meshes = [];
 
     textureLoaded = false;
@@ -57,37 +56,6 @@ class Drawable {
         this.modelMatrix = mult(t, mult(s, mult(rz, mult(ry, rx))));
     }
 
-    computeNormals() {
-        var normalSum = [];
-        var counts = [];
-
-        for (var i = 0; i < this.vertexPositions.length; i++) {
-            normalSum.push(vec3(0, 0, 0));
-            counts.push(0);
-        }
-
-        for (var i = 0; i < this.indices.length; i += 3) {
-            var a = this.indices[i];
-            var b = this.indices[i + 1];
-            var c = this.indices[i + 2];
-
-            var edge1 = subtract(this.vertexPositions[b], this.vertexPositions[a])
-            var edge2 = subtract(this.vertexPositions[c], this.vertexPositions[b])
-            var N = cross(edge1, edge2)
-
-            normalSum[a] = add(normalSum[a], normalize(N));
-            counts[a]++;
-            normalSum[b] = add(normalSum[b], normalize(N));
-            counts[b]++;
-            normalSum[c] = add(normalSum[c], normalize(N));
-            counts[c]++;
-        }
-
-        for (var i = 0; i < this.vertexPositions.length; i++) {
-            this.vertexNormals[i] = mult(1.0 / counts[i], normalSum[i]);
-        }
-    }
-
     setupGL() {
         this.shaderProgram = initShaders(gl, "../shaders/vshader.glsl", "../shaders/fshader.glsl");
 
@@ -97,7 +65,7 @@ class Drawable {
     }
 
     draw(light) {
-        if (this.meshes.length <= 0) {
+        if (this.shaderProgram == -1) {
             return;
         }
 

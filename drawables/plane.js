@@ -7,40 +7,44 @@ class Plane extends Drawable {
     }
 
     initialize(texturePath) {
-        this.vertexPositions = [
+        var vertices = [
             vec3(-1, 0, 1),
             vec3(1, 0, 1),
             vec3(1, 0, -1),
             vec3(-1, 0, -1),
         ];
 
-        this.indices = [
+        var indices = [
             0, 1, 2,
             0, 2, 3
         ];
 
-        this.texCoords = [
+        var texCoords = [
             vec2(0, 0),
             vec2(1, 0),
             vec2(1, 1),
             vec2(0, 1),
         ];
 
-        this.vertexColors = [
+        var colors = [
             vec4(1, 1, 1, 1),
             vec4(1, 1, 1, 1),
             vec4(1, 1, 1, 1),
             vec4(1, 1, 1, 1)
         ];
 
-        this.computeNormals();
-
         var amb = vec4(0.2, 0.2, 0.2, 1.0);
         var dif = vec4(0.6, 0.1, 0.0, 1.0);
         var spec = vec4(1.0, 1.0, 1.0, 1.0);
-        var shine = 100.0
-        this.setupMaterial(texturePath, amb, dif, spec, shine);
-        this.waitSetupGL();
+        var shine = 100.0;
+
+        Material.createMaterial("Plane", texturePath, amb, dif, spec, shine).then((material) => {
+            var mesh = Mesh.createMesh(vertices, colors, indices, [], texCoords, material);
+            this.meshes.push(mesh);
+            mesh.computeNormals();
+    
+            this.setupGL();
+        });
     }
 }
 

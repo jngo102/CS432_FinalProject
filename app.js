@@ -26,16 +26,16 @@ window.onload = function init() {
     gl.clearColor(0, 0, 0, 1);
 
     monkey = new ObjModel(
-        "../models/bird.obj", 
-        "../models/bird.mtl",
-        vec3(0, 0, -5), 
+        "../models/monkey.obj", 
+        "../models/monkey.mtl",
+        vec3(0, 1, -5), 
         1,
         vec3(0, 0, 0));
-    // plane = new Plane(
-    //     vec3(0, 0, 0), 
-    //     10, 
-    //     vec3(0, 0, 0), 
-    //     "../textures/256x grass block.png");
+    plane = new Plane(
+        vec3(0, 0, 0), 
+        10, 
+        vec3(0, 0, 0), 
+        "../textures/256x grass block.png");
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
@@ -74,6 +74,6 @@ function logic(deltaTime) {
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    // plane.draw(sun);
+    plane.draw(sun);
     monkey.draw(sun);
 }

@@ -82,8 +82,37 @@ class Mesh {
         this.lightAmbientShader = gl.getUniformLocation(shaderProgram, "lightAmbient");
         this.lightDiffuseShader = gl.getUniformLocation(shaderProgram, "lightDiffuse");
         this.lightSpecularShader = gl.getUniformLocation(shaderProgram, "lightSpecular");
+    }
 
-        console.log("Finished setting up mesh");
+    computeNormals() {
+        var normalSum = [];
+        var counts = [];
+
+        for (var i = 0; i < this.vertices.length; i++) {
+            normalSum.push(vec3(0, 0, 0));
+            counts.push(0);
+        }
+
+        for (var i = 0; i < this.indices.length; i += 3) {
+            var a = this.indices[i];
+            var b = this.indices[i + 1];
+            var c = this.indices[i + 2];
+
+            var edge1 = subtract(this.vertices[b], this.vertices[a])
+            var edge2 = subtract(this.vertices[c], this.vertices[b])
+            var N = cross(edge1, edge2)
+
+            normalSum[a] = add(normalSum[a], normalize(N));
+            counts[a]++;
+            normalSum[b] = add(normalSum[b], normalize(N));
+            counts[b]++;
+            normalSum[c] = add(normalSum[c], normalize(N));
+            counts[c]++;
+        }
+
+        for (var i = 0; i < this.vertices.length; i++) {
+            this.normals[i] = mult(1.0 / counts[i], normalSum[i]);
+        }
     }
 
     draw(light, modelMatrix) {
@@ -132,7 +161,6 @@ class Mesh {
         gl.enableVertexAttribArray(this.colorShader);
         gl.enableVertexAttribArray(this.normalShader);
         gl.enableVertexAttribArray(this.texCoordShader);
-        console.log("Num indices: " + this.indices.length);
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0);
         gl.disableVertexAttribArray(this.positionShader);
         gl.disableVertexAttribArray(this.colorShader);
