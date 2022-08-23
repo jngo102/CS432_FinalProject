@@ -45,5 +45,12 @@ class CameraController {
         var pitchFactor = rotateX(this.pitch);
         this.camera.cameraMatrix = mult(yawFactor, this.camera.cameraMatrix);
         this.camera.cameraMatrix = mult(pitchFactor, this.camera.cameraMatrix);
+
+        var flashlight = LightManager.getLights()[1];
+        console.log(this.camera.cameraMatrix);
+        flashlight.position = this.camera.position;
+        if (this.inputManager.inputActions.flashlight.wasPressed) {
+            flashlight.toggle();
+        }
     }
 }

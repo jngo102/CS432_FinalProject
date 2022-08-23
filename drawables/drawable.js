@@ -64,7 +64,7 @@ class Drawable {
         });
     }
 
-    draw(light) {
+    draw() {
         if (this.shaderProgram == -1) {
             return;
         }
@@ -72,7 +72,7 @@ class Drawable {
         gl.useProgram(this.shaderProgram);
 
         this.meshes.forEach((mesh) => {
-            mesh.draw(light, this.modelMatrix);
-        })
+            mesh.draw(this.modelMatrix);
+        });
     }
 }

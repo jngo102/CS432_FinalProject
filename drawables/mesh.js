@@ -25,10 +25,25 @@ class Mesh {
     matSpecularShader = -1;
     matAlphaShader = -1;
 
-    lightDirectionShader = -1;
-    lightAmbientShader = -1;
-    lightDiffuseShader = -1;
-    lightSpecularShader = -1;
+    lightSpotAngleShader1 = -1;
+    lightCutoffShader1 = -1;
+    lightStatusShader1 = -1;
+    lightLocationShader1 = -1;
+    lightDirectionShader1 = -1;
+    lightAmbientShader1 = -1;
+    lightDiffuseShader1 = -1;
+    lightSpecularShader1 = -1;
+    lightTypeShader1 = -1;
+
+    lightSpotAngleShader2 = -1;
+    lightCutoffShader2 = -1;
+    lightStatusShader2 = -1;
+    lightLocationShader2 = -1;
+    lightDirectionShader2 = -1;
+    lightAmbientShader2 = -1;
+    lightDiffuseShader2 = -1;
+    lightSpecularShader2 = -1;
+    lightTypeShader2 = -1;
 
     constructor(vertices, colors, indices, normals, texCoords, material) {
         this.vertices = vertices;
@@ -78,10 +93,25 @@ class Mesh {
         this.matSpecularShader = gl.getUniformLocation(shaderProgram, "matSpecular");
         this.matAlphaShader = gl.getUniformLocation(shaderProgram, "matAlpha");
 
-        this.lightDirectionShader = gl.getUniformLocation(shaderProgram, "lightDirection");
-        this.lightAmbientShader = gl.getUniformLocation(shaderProgram, "lightAmbient");
-        this.lightDiffuseShader = gl.getUniformLocation(shaderProgram, "lightDiffuse");
-        this.lightSpecularShader = gl.getUniformLocation(shaderProgram, "lightSpecular");
+        this.lightSpotAngleShader1 = gl.getUniformLocation(shaderProgram, "lightSpotAngle1");
+        this.lightCutoffShader1 = gl.getUniformLocation(shaderProgram, "lightCutoff1");
+        this.lightStatusShader1 = gl.getUniformLocation(shaderProgram, "lightStatus1");
+        this.lightLocationShader1 = gl.getUniformLocation(shaderProgram, "lightLocation1");
+        this.lightDirectionShader1 = gl.getUniformLocation(shaderProgram, "lightDirection1");
+        this.lightAmbientShader1 = gl.getUniformLocation(shaderProgram, "lightAmbient1");
+        this.lightDiffuseShader1 = gl.getUniformLocation(shaderProgram, "lightDiffuse1");
+        this.lightSpecularShader1 = gl.getUniformLocation(shaderProgram, "lightSpecular1");
+        this.lightTypeShader1 = gl.getUniformLocation(shaderProgram, "lightType1");
+
+        this.lightSpotAngleShader2 = gl.getUniformLocation(shaderProgram, "lightSpotAngle2");
+        this.lightCutoffShader2 = gl.getUniformLocation(shaderProgram, "lightCutoff2");
+        this.lightStatusShader2 = gl.getUniformLocation(shaderProgram, "lightStatus2");
+        this.lightLocationShader2 = gl.getUniformLocation(shaderProgram, "lightLocation2");
+        this.lightDirectionShader2 = gl.getUniformLocation(shaderProgram, "lightDirection2");
+        this.lightAmbientShader2 = gl.getUniformLocation(shaderProgram, "lightAmbient2");
+        this.lightDiffuseShader2 = gl.getUniformLocation(shaderProgram, "lightDiffuse2");
+        this.lightSpecularShader2 = gl.getUniformLocation(shaderProgram, "lightSpecular2");
+        this.lightTypeShader2 = gl.getUniformLocation(shaderProgram, "lightType2");
     }
 
     computeNormals() {
@@ -115,7 +145,7 @@ class Mesh {
         }
     }
 
-    draw(light, modelMatrix) {
+    draw(modelMatrix) {
         if (this.positionBuffer == -1 ||
             this.colorBuffer == -1 ||
             this.indexBuffer == -1 ||
@@ -150,12 +180,27 @@ class Mesh {
         gl.uniform4fv(this.matSpecularShader, this.material.specular);
         gl.uniform1f(this.matAlphaShader, this.material.alpha);
 
-        if (light.status == 1) {
-            gl.uniform3fv(this.lightDirectionShader, light.direction);
-            gl.uniform4fv(this.lightAmbientShader, light.ambient);
-            gl.uniform4fv(this.lightDiffuseShader, light.diffuse);
-            gl.uniform4fv(this.lightSpecularShader, light.specular);
-        }
+        var lights = LightManager.getLights();
+        
+        gl.uniform1i(this.lightStatusShader1, lights[0].status);
+        gl.uniform1i(this.lightTypeShader1, lights[0].type);
+        gl.uniform1f(this.lightSpotAngleShader1, lights[0].spotAngle);
+        gl.uniform1f(this.lightCutoffShader1, lights[0].cutoff);
+        gl.uniform3fv(this.lightLocationShader1, lights[0].location);
+        gl.uniform3fv(this.lightDirectionShader1, lights[0].direction);
+        gl.uniform4fv(this.lightAmbientShader1, lights[0].ambient);
+        gl.uniform4fv(this.lightDiffuseShader1, lights[0].diffuse);
+        gl.uniform4fv(this.lightSpecularShader1, lights[0].specular);
+
+        gl.uniform1i(this.lightStatusShader2, lights[1].status);
+        gl.uniform1i(this.lightTypeShader2, lights[1].type);
+        gl.uniform1f(this.lightSpotAngleShader2, lights[1].spotAngle);
+        gl.uniform1f(this.lightCutoffShader2, lights[1].cutoff);
+        gl.uniform3fv(this.lightLocationShader2, lights[1].location);
+        gl.uniform3fv(this.lightDirectionShader2, lights[1].direction);
+        gl.uniform4fv(this.lightAmbientShader2, lights[1].ambient);
+        gl.uniform4fv(this.lightDiffuseShader2, lights[1].diffuse);
+        gl.uniform4fv(this.lightSpecularShader2, lights[1].specular);
 
         gl.enableVertexAttribArray(this.positionShader);
         gl.enableVertexAttribArray(this.colorShader);

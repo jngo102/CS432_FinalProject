@@ -6,7 +6,6 @@ var camera;
 var cameraController;
 var monkey;
 var plane;
-var sun;
 var inputManager;
 
 window.onload = function init() {
@@ -41,16 +40,32 @@ window.onload = function init() {
     var n = vec3(0, 0, 1);
     camera = new Camera(vec3(0, 1, 0), u, v, n, 45, 16 / 9, 0.1, 100);
     camera.lookAt(vec3(0, 0, -1));
-    sun = new Light(vec3(0, 2, 0), vec3(-1, -1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), 1, 1000, 1)
+    var sun = new Light(
+        vec3(0, 100, 0), 
+        vec3(-1, -1, 1), 
+        vec4(0.2, 0.2, 0.2, 1), 
+        vec4(0.4, 0.4, 0.4, 1), 
+        vec4(0.4, 0.4, 0.4, 1), 
+        1, 0, 45, 1);
+    var flashlight = new Light(
+        vec3(0, 0, 0), 
+        vec3(0, -1, 0), 
+        vec4(0.4, 0.4, 0.4, 1), 
+        vec4(1, 1, 1, 1), 
+        vec4(1, 1, 1, 1), 
+        1, 10, 30, 2);
     var inputActions = new InputActions(
         new PlayerAction("KeyA"),
         new PlayerAction("KeyD"),
         new PlayerAction("KeyW"),
         new PlayerAction("KeyS"),
-        new PlayerAction("KeyE")
+        new PlayerAction("KeyF"),
+        new PlayerAction("KeyE"),
     );
     inputManager = new InputManager(window, inputActions, 2);
     cameraController = new CameraController(inputManager);
+
+    var _ = new LightManager([sun, flashlight]);
 
     update();
 };
@@ -74,6 +89,6 @@ function logic(deltaTime) {
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    plane.draw(sun);
-    monkey.draw(sun);
+    plane.draw();
+    monkey.draw();
 }
