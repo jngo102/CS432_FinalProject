@@ -88,7 +88,7 @@ function logic(deltaTime) {
 // Update only graphics
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
+    
     plane.draw();
     monkey.draw();
 }
