@@ -24,6 +24,12 @@ window.onload = function init() {
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0, 0, 0, 1);
 
+    sky = new skyBox(
+        vec3(0, 0, 0),
+        2,
+        vec3(0, 0, 0)
+    );
+
     monkey = new ObjModel(
         "../models/monkey.obj", 
         "../models/monkey.mtl",
@@ -88,7 +94,7 @@ function logic(deltaTime) {
 // Update only graphics
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
+    sky.draw();
     plane.draw();
     monkey.draw();
 }
