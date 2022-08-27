@@ -204,7 +204,6 @@ class skyBox extends Drawable{
                 "../textures/skybox-cloudy-day/sky-bottom.jpg",
                 "../textures/skybox-cloudy-day/sky-front.jpg",  
                 "../textures/skybox-cloudy-day/sky-back.jpg",
-             
             ];
 
             // for( var i = 0; i < 6; i++ ){
@@ -245,6 +244,7 @@ class skyBox extends Drawable{
         gl.enableVertexAttribArray(skyBox.aPositionShader);    
         gl.enableVertexAttribArray(skyBox.aTextureCoordShader);
         gl.disable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after
+        // console.log(camera.getCameraVRP())
     	gl.drawElements(gl.TRIANGLES, skyBox.indices.length, gl.UNSIGNED_BYTE, 0);
         // gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
         gl.enable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after

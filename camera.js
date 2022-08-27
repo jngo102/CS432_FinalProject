@@ -18,6 +18,14 @@ class Camera {
         this.updateCameraMatrix();
     }
 
+    getCameraVRP(){
+        return this.vrp;
+    }
+
+    setCameraVRP(vrp){
+        this.vrp = vrp;
+    }
+
     // Look at a point in space
     lookAt(target) {
         this.cameraMatrix = lookAt(this.vrp, target, vec3(0, 1, 0));
