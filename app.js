@@ -44,7 +44,7 @@ window.onload = function init() {
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
-    camera = new Camera(vec3(0, 1, 0), u, v, n, 45, 16 / 9, 0.1, 100);
+    camera = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 100);
     camera.lookAt(vec3(0, 0, -1));
     var sun = new Light(
         vec3(0, 100, 0), 
