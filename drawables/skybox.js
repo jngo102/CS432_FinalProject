@@ -11,20 +11,7 @@ class skyBox extends Drawable{
     	vec3(20,-20,-20),
     ];
   
-    static vertexTextureCoords = [ //TODO: make these vec3
-        // vec2(0,0),
-       	// vec2(1,0),
-       	// vec2(1,1),
-    	// vec2(0,1),
-
-        // vec2(0,0),
-        // vec2(1,0),
-        // vec2(1,1),
-        // vec2(0,1),
-
-        // vec3(-1, -1, 1),
-        // vec3(1, -1, 1),
-        // vec3( )
+    static vertexTextureCoords = [
 
         vec3(-1,-1,1),
     	vec3(-1,1,1),
@@ -103,14 +90,7 @@ class skyBox extends Drawable{
         
         gl.bindTexture(gl.TEXTURE_CUBE_MAP, skyBox.texture)
 
-
-    //     // for (var i = 0; i < 6; i++){ 
-    //     //     let image = new Image();
-    //     //     image.src = images[i];
-    //     //     image.i = i;
-    //     //     image.onload = function(){
-                
-    //             gl.bindTexture(gl.TEXTURE_CUBE_MAP, skyBox.texture)
+        //BENEDICT HOFMOCKEL HAS MORE DEVELOPMENTAL CODE FOR THIS - CONTACT HIM AT BMH324@DREXEL.EDU
                 
     //     //         // From https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Constants
     //     //         // TEXTURE_CUBE_MAP_POSITIVE_X	0x8515	
@@ -120,43 +100,20 @@ class skyBox extends Drawable{
     //     //         // TEXTURE_CUBE_MAP_POSITIVE_Z	0x8519	
     //     //         // TEXTURE_CUBE_MAP_NEGATIVE_Z	0x851A
 
-                // for (var i = 0; i < 6; i++){ //Citing this code repository for the for-loop here: https://github.com/xdsopl/webgl/blob/master/cubemap.html
-    //     //         //     image.src(images[i])
-                        gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + skyBox.counter, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, skyBox.cubemap_image[skyBox.counter])
+                gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + skyBox.counter, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, skyBox.cubemap_image[skyBox.counter])
 
-                // }
                 console.log(skyBox.counter)
                 console.log(gl.TEXTURE_CUBE_MAP_POSITIVE_X + skyBox.counter)
 
-    //                 for (var i = 0; i < 6; i++)
-    //                     gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + skyBox.counter, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, cubemap_image[i])
-    //     //         console.log(this.i)
-    //     //         gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + this.i, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, image)
-
-                //gl.generateMipmap(gl.TEXTURE_CUBE_MAP)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
                 skyBox.counter++;
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE)  
-    //     //         skyBox.count++;          
-    //     //     }
-    //     // }
-
-    //     //are these meant to be here?
-    //     // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-    //     // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-    //     // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-    //     // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-    //     // gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE)      
-
-    //     // image.src = "./textures/sky-left.jpg";//TODO: make sure that gl.texImage2D gets a list elemen at index i with the correct sky-DIRECTION.jpg
-    //     // image.src = imageSources
     }
 
     static loadCubemap(imagesSources){
-        // skyBox.counter = 0;
         skyBox.cubemap_image = [];
         skyBox.texture = gl.createTexture();
         for (var i = 0; i < 6; i++) {
@@ -172,23 +129,6 @@ class skyBox extends Drawable{
             skyBox.cubemap_image[i].src = imagesSources[i];
         }
     }
-
-    // static loadCubemap(imagesSources){
-    //     // skyBox.counter = 0;
-    //     skyBox.cubemap_image = [];
-    //     skyBox.texture = gl.createTexture();
-    //     gl.bindTexture(gl.TEXTURE_CUBE_MAP, skyBox.texture)
-    //     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-    //     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-    //     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-    //     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-    //     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE)  
-    //     for (var i = 0; i < 6; i++) {
-    //         skyBox.cubemap_image[i] = new Image();
-    //         skyBox.cubemap_image[i].onload = skyBox.initializeTexture; //perhaps this.initializeTexture
-    //         skyBox.cubemap_image[i].src = imagesSources[i];
-    //     }
-    // }
     
     constructor(transform, scale, rotation ){ //TODO: addtexture path to constructor as argument
         // super(transform[0], transform[1], transform[2], scale, rotation[1], rotation[2], rotation[3]);
@@ -215,24 +155,12 @@ class skyBox extends Drawable{
                 
                 "../textures/skybox-ulukai/corona_rt.png",//1
                 "../textures/skybox-ulukai/corona_lf.png",//2
-                
                 "../textures/skybox-ulukai/corona_up.png",         
                 "../textures/skybox-ulukai/corona_dn.png",                
-                        
-
-
                 "../textures/skybox-ulukai/corona_bk.png",
                 "../textures/skybox-ulukai/corona_ft.png",//6
-
-            ];
-
-            // for( var i = 0; i < 6; i++ ){
-            //     skyBox.initializeTexture(images[i]);
-            // }
-            
+            ];           
             skyBox.loadCubemap(imagesSources);
-
-            
         }
         
     }
