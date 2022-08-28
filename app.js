@@ -1,7 +1,7 @@
 var canvas;
 var gl;
 
-const FRAME_TIME = 1 / 60;
+const FRAME_TIME = 1 / 30;
 var camera;
 var cameraController;
 var monkey;
@@ -24,6 +24,12 @@ window.onload = function init() {
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0, 0, 0, 1);
 
+    sky = new skyBox(
+        vec3(0, 0, 0),
+        2,
+        vec3(0, 0, 0)
+    );
+
     monkey = new ObjModel(
         "../models/monkey.obj", 
         "../models/monkey.mtl",
@@ -38,7 +44,7 @@ window.onload = function init() {
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
-    camera = new Camera(vec3(0, 1, 0), u, v, n, 45, 16 / 9, 0.1, 100);
+    camera = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 100);
     camera.lookAt(vec3(0, 0, -1));
     var sun = new Light(
         vec3(0, 100, 0), 
@@ -88,7 +94,7 @@ function logic(deltaTime) {
 // Update only graphics
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
+    sky.draw();
     plane.draw();
     monkey.draw();
 }

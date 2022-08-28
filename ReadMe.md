@@ -4,4 +4,5 @@
 2.  Open a webpage at the server's URL.
 
 ## Game Instructions
-1.  
+1.  Use W A S D to move
+2.  Click the canvas to look around using mouse
