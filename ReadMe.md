@@ -6,8 +6,8 @@
 ## Game Instructions
 ## Properties
 | Action        | Effect
-|--------------|--------------------------------------------------------------------------|---------------|
-| W            | Move camera foward                   | 65            |
-| A            | Move camera left                                 | x             |
-| S            | Move camera right                                                                 | false         |
-| D            | Move camera backward                                   | true          |
+|--------------|--------------------------------------------------------------------------
+| W            | Move camera foward
+| A            | Move camera left
+| S            | Move camera right
+| D            | Move camera backward
