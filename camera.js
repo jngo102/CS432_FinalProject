@@ -24,6 +24,7 @@ class Camera {
 
     setCameraVRP(vrp){
         this.vrp = vrp;
+        // this.updateCameraMatrix();
     }
 
     // Look at a point in space

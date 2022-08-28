@@ -1,7 +1,7 @@
 var canvas;
 var gl;
 
-const FRAME_TIME = 1 / 60;
+const FRAME_TIME = 1 / 30;
 var camera;
 var cameraController;
 var monkey;
