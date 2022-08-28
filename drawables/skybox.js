@@ -1,14 +1,14 @@
 class skyBox extends Drawable{
     static vertexPositions = [
-    	vec3(-10,-10,10),
-    	vec3(-10,10,10),
-    	vec3(10,10,10),
-    	vec3(10,-10,10),
+    	vec3(-20,-20,20),
+    	vec3(-20,20,20),
+    	vec3(20,20,20),
+    	vec3(20,-20,20),
 
-    	vec3(-10,-10,-10),
-    	vec3(-10,10,-10),
-    	vec3(10,10,-10),
-    	vec3(10,-10,-10),
+    	vec3(-20,-20,-20),
+    	vec3(-20,20,-20),
+    	vec3(20,20,-20),
+    	vec3(20,-20,-20),
     ];
   
     static vertexTextureCoords = [ //TODO: make these vec3
@@ -198,6 +198,13 @@ class skyBox extends Drawable{
         if(skyBox.shaderProgram == -1){
             skyBox.initialize()
             var imagesSources = [
+                // "../textures/skybox-cloudy-day/sky-right.jpg",
+                // "../textures/skybox-cloudy-day/sky-left.jpg",
+                // "../textures/skybox-cloudy-day/sky-top.jpg",
+                // "../textures/skybox-cloudy-day/sky-bottom.jpg",
+                // "../textures/skybox-cloudy-day/sky-front.jpg",  
+                // "../textures/skybox-cloudy-day/sky-back.jpg",
+
                 "../textures/skybox-cloudy-day/sky-right.jpg",
                 "../textures/skybox-cloudy-day/sky-left.jpg",
                 "../textures/skybox-cloudy-day/sky-top.jpg",
@@ -220,6 +227,14 @@ class skyBox extends Drawable{
     draw() {
         if(skyBox.counter < 6)  //only draw when texture is loaded.
         	return;
+
+        var oldCameraVRP = camera.getCameraVRP()//save old camera vrp in variable to restore to after drawing
+        console.log(oldCameraVRP)
+        camera.setCameraVRP(vec3(0,1,0))
+        console.log(camera.getCameraVRP())
+
+
+        gl.disable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after
         
         gl.useProgram(skyBox.shaderProgram);
         
@@ -243,13 +258,15 @@ class skyBox extends Drawable{
         
         gl.enableVertexAttribArray(skyBox.aPositionShader);    
         gl.enableVertexAttribArray(skyBox.aTextureCoordShader);
-        gl.disable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after
-        // console.log(camera.getCameraVRP())
-    	gl.drawElements(gl.TRIANGLES, skyBox.indices.length, gl.UNSIGNED_BYTE, 0);
-        // gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
-        gl.enable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after
+        
+
+        gl.drawElements(gl.TRIANGLES, skyBox.indices.length, gl.UNSIGNED_BYTE, 0);
+        
+        
     	gl.disableVertexAttribArray(skyBox.aPositionShader);    
     	gl.disableVertexAttribArray(skyBox.aTextureCoordShader);    
+        gl.enable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after
+        camera.setCameraVRP(oldCameraVRP)
     }
 }
 
