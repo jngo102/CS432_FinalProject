@@ -4,5 +4,10 @@
 2.  Open a webpage at the server's URL.
 
 ## Game Instructions
-1.  Use W A S D to move
-2.  Click the canvas to look around using mouse
+## Properties
+| Action        | Effect
+|--------------|--------------------------------------------------------------------------|---------------|
+| W            | Move camera foward                   | 65            |
+| A            | Move camera left                                 | x             |
+| S            | Move camera right                                                                 | false         |
+| D            | Move camera backward                                   | true          |
