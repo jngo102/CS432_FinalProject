@@ -102,9 +102,6 @@ class skyBox extends Drawable{
 
                 gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + skyBox.counter, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, skyBox.cubemap_image[skyBox.counter])
 
-                console.log(skyBox.counter)
-                console.log(gl.TEXTURE_CUBE_MAP_POSITIVE_X + skyBox.counter)
-
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
                 skyBox.counter++;
@@ -138,12 +135,12 @@ class skyBox extends Drawable{
         if(skyBox.shaderProgram == -1){
             skyBox.initialize()
             var imagesSources = [
-                // "../textures/skybox-cloudy-day/sky-right.jpg",
-                // "../textures/skybox-cloudy-day/sky-left.jpg",
-                // "../textures/skybox-cloudy-day/sky-top.jpg",
-                // "../textures/skybox-cloudy-day/sky-bottom.jpg",
-                // "../textures/skybox-cloudy-day/sky-front.jpg",  
-                // "../textures/skybox-cloudy-day/sky-back.jpg",
+                "../textures/skybox-cloudy-day/sky-right.jpg",
+                "../textures/skybox-cloudy-day/sky-left.jpg",
+                "../textures/skybox-cloudy-day/sky-top.jpg",
+                "../textures/skybox-cloudy-day/sky-bottom.jpg",
+                "../textures/skybox-cloudy-day/sky-front.jpg",  
+                "../textures/skybox-cloudy-day/sky-back.jpg",
 
                 // "../textures/skybox-nebula/skybox_left.png",
                 // "../textures/skybox-nebula/skybox_right.png",
@@ -151,18 +148,16 @@ class skyBox extends Drawable{
                 // "../textures/skybox-nebula/skybox_down.png",
                 // "../textures/skybox-nebula/skybox_front.png",  
                 // "../textures/skybox-nebula/skybox_back.png",
-
                 
-                "../textures/skybox-ulukai/corona_rt.png",//1
-                "../textures/skybox-ulukai/corona_lf.png",//2
-                "../textures/skybox-ulukai/corona_up.png",         
-                "../textures/skybox-ulukai/corona_dn.png",                
-                "../textures/skybox-ulukai/corona_bk.png",
-                "../textures/skybox-ulukai/corona_ft.png",//6
+                // "../textures/skybox-ulukai/corona_rt.png",
+                // "../textures/skybox-ulukai/corona_lf.png",
+                // "../textures/skybox-ulukai/corona_up.png",         
+                // "../textures/skybox-ulukai/corona_dn.png",                
+                // "../textures/skybox-ulukai/corona_bk.png",
+                // "../textures/skybox-ulukai/corona_ft.png",
             ];           
             skyBox.loadCubemap(imagesSources);
         }
-        
     }
     
     draw() {

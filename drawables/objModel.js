@@ -16,7 +16,9 @@ class ObjModel extends Drawable {
             }
             var lines = mat.split('\n');
             var matName = "None";
-            var texturePath = "../textures/brks.jpg";
+            // var texturePath = "../textures/brks.jpg";
+            var texturePath= "../textures/solar-system/2k_earth_daymap.jpg";
+            
             var ambient = vec4(0.4, 0.4, 0.4, 1.0);
             var diffuse = vec4(1, 1, 1, 1); 
             var specular = vec4(1, 1, 1, 1);

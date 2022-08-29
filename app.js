@@ -22,11 +22,11 @@ window.onload = function init() {
     gl.enable(gl.DEPTH_TEST);
 
     gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(0, 0, 0, 1);
+    gl.clearColor(0.5, 0.5, 0.5, 1);
 
     sky = new skyBox(
         vec3(0, 0, 0),
-        2,
+        1,
         vec3(0, 0, 0)
     );
 
@@ -36,6 +36,21 @@ window.onload = function init() {
         vec3(0, 1, -5), 
         1,
         vec3(0, 0, 0));
+
+    earth = new ObjModel(
+        "../models/SolarSystem/Earth/Earth.obj", 
+        "../models/SolarSystem/Earth/Earth.mtl",
+        vec3(0, 1, -5), 
+        3,
+        vec3(0, 0, 0));
+
+    mars = new ObjModel(
+        "../models/SolarSystem/Mars/Mars.obj", 
+        "../models/SolarSystem/Mars/Mars.mtl",
+        vec3(0, 1, 0), 
+        5,
+        vec3(0, 0, 0));
+
     plane = new Plane(
         vec3(0, 0, 0), 
         10, 
@@ -95,6 +110,8 @@ function logic(deltaTime) {
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     sky.draw();
-    plane.draw();
-    monkey.draw();
+    // plane.draw();
+    // monkey.draw();
+    earth.draw()
+    mars.draw()
 }
