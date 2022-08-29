@@ -1,12 +1,14 @@
 var canvas;
 var gl;
 
-const FRAME_TIME = 1 / 30;
+const FRAME_TIME = 1 / 60;
 var camera;
 var cameraController;
 var monkey;
 var plane;
 var inputManager;
+
+var runTime = 0;
 
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
@@ -40,15 +42,15 @@ window.onload = function init() {
     earth = new ObjModel(
         "../models/SolarSystem/Earth/Earth.obj", 
         "../models/SolarSystem/Earth/Earth.mtl",
-        vec3(0, 1, -5), 
-        3,
+        vec3(8, 1, 0), 
+        1,
         vec3(0, 0, 0));
 
     mars = new ObjModel(
         "../models/SolarSystem/Mars/Mars.obj", 
         "../models/SolarSystem/Mars/Mars.mtl",
         vec3(0, 1, 0), 
-        5,
+        1,
         vec3(0, 0, 0));
 
     plane = new Plane(
@@ -113,5 +115,7 @@ function render() {
     // plane.draw();
     // monkey.draw();
     earth.draw()
-    // mars.draw()
+    mars.draw()
+    
+    console.log(runTime += FRAME_TIME)
 }
