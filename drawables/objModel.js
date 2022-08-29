@@ -10,7 +10,10 @@ class ObjModel extends Drawable {
     parseMtl(mtlPath) {
         var mtlFile = loadFileAJAX(mtlPath);
         var mats = mtlFile.split('\r\n\r\nnewmtl ');
+        console.log(mats)
         mats.forEach((mat, matIndex) => {
+            console.log(mtlPath)
+            console.log(matIndex)
             if (matIndex <= 0) {
                 return;
             }
@@ -57,6 +60,8 @@ class ObjModel extends Drawable {
 
             Material.createMaterial(matName, texturePath, ambient, diffuse, specular, alpha)
                     .then((material) => {
+                        console.log(texturePath)
+                        console.log("materialsMap length" + this.materialsMap.length);
                         for (var i = 0; i < this.materialsMap.length; i++) {
                             if (this.materialsMap[i].matName == material.name) {
                                 var vertices = this.materialsMap[i].vertices;
@@ -65,8 +70,14 @@ class ObjModel extends Drawable {
                                 var normals = this.materialsMap[i].normals;
                                 var texCoords = this.materialsMap[i].texCoords;
                                 this.meshes.push(Mesh.createMesh(vertices, colors, indices, normals, texCoords, material));
+
+                                console.log("meshes length:" + this.meshes.length)
+                                console.log("materialsMap length" + this.materialsMap.length);
+
                                 if (this.meshes.length == this.materialsMap.length) {
                                     this.setupGL();
+                                    console.log("setupGL has executed. class object:");
+                                    console.log(this);
                                 }
                             }
                         }

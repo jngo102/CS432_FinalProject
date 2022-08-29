@@ -165,9 +165,9 @@ class skyBox extends Drawable{
         	return;
 
         var oldCameraVRP = camera.getCameraVRP()//save old camera vrp in variable to restore to after drawing
-        console.log(oldCameraVRP)
+        // console.log(oldCameraVRP)
         camera.setCameraVRP(vec3(0,1,0))
-        console.log(camera.getCameraVRP())
+        // console.log(camera.getCameraVRP())
 
 
         gl.disable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after

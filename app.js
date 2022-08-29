@@ -113,5 +113,5 @@ function render() {
     // plane.draw();
     // monkey.draw();
     earth.draw()
-    mars.draw()
+    // mars.draw()
 }
