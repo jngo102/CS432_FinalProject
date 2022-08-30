@@ -7,6 +7,8 @@ var cameraController;
 var monkey;
 var plane;
 var inputManager;
+var jupiter;
+var sun;
 
 var runTime = 0;
 
@@ -52,6 +54,20 @@ window.onload = function init() {
         vec3(0, 1, 0), 
         -1,
         vec3(0, 0, 0));
+    
+    jupiter = new ObjModel(
+        "../models/SolarSystem/Jupiter/Jupiter.obj",
+        "../models/SolarSystem/Jupiter/Jupiter.mtl",
+        vec3(-64, 1, 0),
+        1,
+        vec3(0, 0, 0));
+
+    Sun = new ObjModel(
+        "../models/SolarSystem/Sun/Sun.obj",
+        "../models/SolarSystem/Sun/Sun.mtl",
+        vec3(-256, 1, 0),
+        1,
+        vec3(0, 0, 0));
 
     plane = new Plane(
         vec3(0, 0, 0), 
@@ -61,7 +77,7 @@ window.onload = function init() {
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
-    camera = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 100);
+    camera = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 1000);
     camera.lookAt(vec3(0, 0, -1));
     var sun = new Light(
         vec3(0, 100, 0), 
@@ -115,6 +131,8 @@ function render() {
     sky.draw();
     // plane.draw();
     // monkey.draw();
-    earth.draw()
-    mars.draw()
+    earth.draw();
+    mars.draw();
+    jupiter.draw();
+    Sun.draw();
 }
