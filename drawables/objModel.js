@@ -1,8 +1,10 @@
 class ObjModel extends Drawable {
     faces = [];
+    name = "";
     materialsMap = [];
-    constructor(objPath, mtlPath, position, scale, rotation) {
+    constructor(name, objPath, mtlPath, position, scale, rotation) {
         super(position[0], position[1], position[2], scale, rotation[0], rotation[1], rotation[2]);
+        this.name = name;
         this.parseObj(objPath);
         this.parseMtl(mtlPath);
     }

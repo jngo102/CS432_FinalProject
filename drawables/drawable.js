@@ -26,6 +26,17 @@ class Drawable {
         return this.modelMatrix;
     }
 
+    getPosition() {
+        return vec3(this.tx, this.ty, this.tz);
+    }
+
+    setPosition(x, y, z) {
+        this.tx = x;
+        this.ty = y;
+        this.tz = z;
+        this.updateModelMatrix();
+    }
+
     getModelRotation() {
         return this.rotation;
     }

@@ -8,7 +8,7 @@ class CameraController {
         this.pitch = 0;
         this.roll = 0;
         this.moveVector = vec2(0, 0);
-        this.moveSpeed = 2;
+        this.moveSpeed = 5;
         this.flySpeed = 2;
     }
 
