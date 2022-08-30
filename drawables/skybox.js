@@ -135,12 +135,12 @@ class skyBox extends Drawable{
         if(skyBox.shaderProgram == -1){
             skyBox.initialize()
             var imagesSources = [
-                "../textures/skybox-cloudy-day/sky-right.jpg",
-                "../textures/skybox-cloudy-day/sky-left.jpg",
-                "../textures/skybox-cloudy-day/sky-top.jpg",
-                "../textures/skybox-cloudy-day/sky-bottom.jpg",
-                "../textures/skybox-cloudy-day/sky-front.jpg",  
-                "../textures/skybox-cloudy-day/sky-back.jpg",
+                // "../textures/skybox-cloudy-day/sky-right.jpg",
+                // "../textures/skybox-cloudy-day/sky-left.jpg",
+                // "../textures/skybox-cloudy-day/sky-top.jpg",
+                // "../textures/skybox-cloudy-day/sky-bottom.jpg",
+                // "../textures/skybox-cloudy-day/sky-front.jpg",  
+                // "../textures/skybox-cloudy-day/sky-back.jpg",
 
                 // "../textures/skybox-nebula/skybox_left.png",
                 // "../textures/skybox-nebula/skybox_right.png",
@@ -149,12 +149,12 @@ class skyBox extends Drawable{
                 // "../textures/skybox-nebula/skybox_front.png",  
                 // "../textures/skybox-nebula/skybox_back.png",
                 
-                // "../textures/skybox-ulukai/corona_rt.png",
-                // "../textures/skybox-ulukai/corona_lf.png",
-                // "../textures/skybox-ulukai/corona_up.png",         
-                // "../textures/skybox-ulukai/corona_dn.png",                
-                // "../textures/skybox-ulukai/corona_bk.png",
-                // "../textures/skybox-ulukai/corona_ft.png",
+                "../textures/skybox-ulukai/corona_rt.png",
+                "../textures/skybox-ulukai/corona_lf.png",
+                "../textures/skybox-ulukai/corona_up.png",         
+                "../textures/skybox-ulukai/corona_dn.png",                
+                "../textures/skybox-ulukai/corona_bk.png",
+                "../textures/skybox-ulukai/corona_ft.png",
             ];           
             skyBox.loadCubemap(imagesSources);
         }
@@ -164,11 +164,12 @@ class skyBox extends Drawable{
         if(skyBox.counter < 6)  //only draw when texture is loaded.
         	return;
 
-        var oldCameraVRP = camera.getCameraVRP()//save old camera vrp in variable to restore to after drawing
-        // console.log(oldCameraVRP)
-        camera.setCameraVRP(vec3(0,1,0))
-        // console.log(camera.getCameraVRP())
-
+        //use this rendering trick of transforming the skybox cube to the camera's vrp matrix coorinates
+        var oldCameraVRP = camera.getCameraVRP()
+        this.tx = oldCameraVRP[0]
+        this.ty = oldCameraVRP[1]
+        this.tz = oldCameraVRP[2]
+        this.updateModelMatrix()
 
         gl.disable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after
         
