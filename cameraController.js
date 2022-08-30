@@ -8,7 +8,8 @@ class CameraController {
         this.pitch = 0;
         this.roll = 0;
         this.moveVector = vec2(0, 0);
-        this.moveSpeed = 5;
+        this.moveSpeed = 2;
+        this.flySpeed = 2;
     }
 
     // Update the camera every frame
@@ -39,17 +40,18 @@ class CameraController {
         if (this.moveVector[0] !== 0 || this.moveVector[1] !== 0) {
             this.moveVector = mult(deltaTime, mult(this.moveSpeed, normalize(this.moveVector)));
         }
-        this.camera.translate(this.moveVector[0], 0, this.moveVector[1])
+
+        var flyVelocity = 0;
+        if (this.inputManager.inputActions.ascend.isPressed) {
+            flyVelocity += this.flySpeed * deltaTime;
+        } else if (this.inputManager.inputActions.descend.isPressed) {
+            flyVelocity -= this.flySpeed * deltaTime;
+        }
+        this.camera.translate(this.moveVector[0], flyVelocity, this.moveVector[1]);
         
         var yawFactor = rotateY(this.yaw);
         var pitchFactor = rotateX(this.pitch);
         this.camera.cameraMatrix = mult(yawFactor, this.camera.cameraMatrix);
         this.camera.cameraMatrix = mult(pitchFactor, this.camera.cameraMatrix);
-
-        var flashlight = LightManager.getLights()[1];
-        flashlight.position = this.camera.position;
-        if (this.inputManager.inputActions.flashlight.wasPressed) {
-            flashlight.toggle();
-        }
     }
 }

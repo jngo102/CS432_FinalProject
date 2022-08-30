@@ -29,13 +29,17 @@ class InputManager {
                     this.inputActions.down.isPressed = true;
                     this.inputActions.down.wasPressed = true;
                     break;
-                case this.inputActions.flashlight.key:
-                    this.inputActions.flashlight.isPressed = true;
-                    this.inputActions.flashlight.wasPressed = true;
-                    break;
                 case this.inputActions.interact.key:
                     this.inputActions.interact.isPressed = true;
                     this.inputActions.interact.wasPressed = true;
+                    break;
+                case this.inputActions.ascend.key:
+                    this.inputActions.ascend.isPressed = true;
+                    this.inputActions.ascend.wasPressed = true;
+                    break;
+                case this.inputActions.descend.key:
+                    this.inputActions.descend.isPressed = true;
+                    this.inputActions.descend.wasPressed = true;
                     break;
             }
         });
@@ -59,13 +63,17 @@ class InputManager {
                     this.inputActions.down.isPressed = false;
                     this.inputActions.down.wasReleased = true;
                     break;
-                case this.inputActions.flashlight.key:
-                    this.inputActions.flashlight.isPressed = false;
-                    this.inputActions.flashlight.wasReleased = true;
-                    break;
                 case this.inputActions.interact.key:
                     this.inputActions.interact.isPressed = false;
                     this.inputActions.interact.wasReleased = true;
+                    break;
+                case this.inputActions.ascend.key:
+                    this.inputActions.ascend.isPressed = false;
+                    this.inputActions.ascend.wasReleased = true;
+                    break;
+                case this.inputActions.descend.key:
+                    this.inputActions.descend.isPressed = false;
+                    this.inputActions.descend.wasReleased = true;
                     break;
             }
         });
@@ -92,11 +100,14 @@ class InputManager {
         if (this.inputActions.down.wasPressed) {
             this.inputActions.down.wasPressed = false;
         }
-        if (this.inputActions.flashlight.wasPressed) {
-            this.inputActions.flashlight.wasPressed = false;
-        }
         if (this.inputActions.interact.wasPressed) {
             this.inputActions.interact.wasPressed = false;
+        }
+        if (this.inputActions.ascend.wasPressed) {
+            this.inputActions.ascend.wasPressed = false;
+        }
+        if (this.inputActions.descend.wasPressed) {
+            this.inputActions.descend.wasPressed = false;
         }
         
         if (this.inputActions.left.wasReleased) {
@@ -111,11 +122,14 @@ class InputManager {
         if (this.inputActions.down.wasReleased) {
             this.inputActions.down.wasReleased = false;
         }
-        if (this.inputActions.flashlight.wasReleased) {
-            this.inputActions.flashlight.wasReleased = false;
-        }
         if (this.inputActions.interact.wasReleased) {
             this.inputActions.interact.wasReleased = false;
+        }
+        if (this.inputActions.ascend.wasReleased) {
+            this.inputActions.ascend.wasReleased = false;
+        }
+        if (this.inputActions.descend.wasReleased) {
+            this.inputActions.descend.wasReleased = false;
         }
     }
 }
