@@ -82,8 +82,9 @@ window.onload = function init() {
         new PlayerAction("KeyD"),
         new PlayerAction("KeyW"),
         new PlayerAction("KeyS"),
-        new PlayerAction("KeyF"),
         new PlayerAction("KeyE"),
+        new PlayerAction("Space"),
+        new PlayerAction("ShiftLeft"),
     );
     inputManager = new InputManager(window, inputActions, 2);
     cameraController = new CameraController(inputManager);
