@@ -10,13 +10,17 @@ class ObjModel extends Drawable {
     parseMtl(mtlPath) {
         var mtlFile = loadFileAJAX(mtlPath);
         var mats = mtlFile.split('\r\n\r\nnewmtl ');
+        console.log(mats)
         mats.forEach((mat, matIndex) => {
+            console.log(mtlPath)
+            console.log(matIndex)
             if (matIndex <= 0) {
                 return;
             }
             var lines = mat.split('\n');
             var matName = "None";
-            var texturePath = "../textures/brks.jpg";
+            var texturePath = "";
+            
             var ambient = vec4(0.4, 0.4, 0.4, 1.0);
             var diffuse = vec4(1, 1, 1, 1); 
             var specular = vec4(1, 1, 1, 1);
@@ -54,21 +58,24 @@ class ObjModel extends Drawable {
             });
 
             Material.createMaterial(matName, texturePath, ambient, diffuse, specular, alpha)
-                    .then((material) => {
-                        for (var i = 0; i < this.materialsMap.length; i++) {
-                            if (this.materialsMap[i].matName == material.name) {
-                                var vertices = this.materialsMap[i].vertices;
-                                var colors = this.materialsMap[i].colors;
-                                var indices = this.materialsMap[i].indices;
-                                var normals = this.materialsMap[i].normals;
-                                var texCoords = this.materialsMap[i].texCoords;
-                                this.meshes.push(Mesh.createMesh(vertices, colors, indices, normals, texCoords, material));
-                                if (this.meshes.length == this.materialsMap.length) {
-                                    this.setupGL();
-                                }
+                .then((material) => {
+                    for (var i = 0; i < this.materialsMap.length; i++) {
+                        if (this.materialsMap[i].matName == material.name) {
+                            var vertices = this.materialsMap[i]["vertices"];
+                            var colors = this.materialsMap[i]["colors"];
+                            var indices = this.materialsMap[i]["indices"];
+                            var normals = this.materialsMap[i]["normals"];
+                            var texCoords = this.materialsMap[i]["texCoords"];
+                            var newMesh = Mesh.createMesh(vertices, colors, indices, normals, texCoords, material);
+                            newMesh.computeNormals();
+                            this.meshes.push(newMesh);
+
+                            if (this.meshes.length == this.materialsMap.length) {
+                                this.setupGL();
                             }
                         }
-                    });
+                    }
+                });
         });
     }
 
@@ -129,22 +136,28 @@ class ObjModel extends Drawable {
                 }
             });
 
+            var tempNorms = [];
             this.faces.forEach((group) => {
                 group.forEach((info) => {
                     var infoArray = info.split('/');
                     var posIndex = parseInt(infoArray[0]) - 1;
+                    var texIndex = parseInt(infoArray[1]) - 1;
+                    var normIndex = parseInt(infoArray[2]) - 1;
                     indices.push(posIndex);
+                    tempNorms.push(normals[normIndex]);
                     colors.push(vec4(1, 1, 1, 1));
                 });
             });
 
+            normals = tempNorms;
+
             this.materialsMap.push({
-                matName: matName, 
-                vertices: vertices, 
-                colors: colors, 
-                indices: indices, 
-                normals: normals, 
-                texCoords: texCoords
+                "matName": matName, 
+                "vertices": vertices, 
+                "colors": colors, 
+                "indices": indices, 
+                "normals": normals, 
+                "texCoords": texCoords
             });
         });
     }

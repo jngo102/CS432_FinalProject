@@ -47,7 +47,6 @@ class CameraController {
         this.camera.cameraMatrix = mult(pitchFactor, this.camera.cameraMatrix);
 
         var flashlight = LightManager.getLights()[1];
-        console.log(this.camera.cameraMatrix);
         flashlight.position = this.camera.position;
         if (this.inputManager.inputActions.flashlight.wasPressed) {
             flashlight.toggle();
