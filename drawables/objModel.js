@@ -66,12 +66,12 @@ class ObjModel extends Drawable {
                             var indices = this.materialsMap[i]["indices"];
                             var normals = this.materialsMap[i]["normals"];
                             var texCoords = this.materialsMap[i]["texCoords"];
-                            this.meshes.push(Mesh.createMesh(vertices, colors, indices, normals, texCoords, material));
+                            var newMesh = Mesh.createMesh(vertices, colors, indices, normals, texCoords, material);
+                            newMesh.computeNormals();
+                            this.meshes.push(newMesh);
 
                             if (this.meshes.length == this.materialsMap.length) {
                                 this.setupGL();
-                                console.log("setupGL has executed. class object:");
-                                console.log(this);
                             }
                         }
                     }

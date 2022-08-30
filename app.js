@@ -50,7 +50,7 @@ window.onload = function init() {
         "../models/SolarSystem/Mars/Mars.obj", 
         "../models/SolarSystem/Mars/Mars.mtl",
         vec3(0, 1, 0), 
-        1,
+        -1,
         vec3(0, 0, 0));
 
     plane = new Plane(
