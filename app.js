@@ -43,7 +43,7 @@ window.onload = function init() {
         "../models/SolarSystem/Earth/Earth.obj", 
         "../models/SolarSystem/Earth/Earth.mtl",
         vec3(8, 1, 0), 
-        1,
+        -1,
         vec3(0, 0, 0));
 
     mars = new ObjModel(
@@ -116,6 +116,4 @@ function render() {
     // monkey.draw();
     earth.draw()
     mars.draw()
-    
-    console.log(runTime += FRAME_TIME)
 }

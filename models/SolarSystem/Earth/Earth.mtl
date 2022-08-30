@@ -11,6 +11,6 @@ Ni 1.000000
 d 1.000000
 illum 3
 
-map_Kd ../textures/solar-system/2k_earth_daymap.jpg
+map_Kd ../textures/solar-system/Earth.jpg
 # map_Kd ../textures/solar-system/2k_earth_daymap_square.jpg
 # map_Kd ../textures/brks.jpg
