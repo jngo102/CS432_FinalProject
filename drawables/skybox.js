@@ -165,7 +165,7 @@ class skyBox extends Drawable{
         	return;
 
         //use this rendering trick of transforming the skybox cube to the camera's vrp matrix coorinates
-        var oldCameraVRP = camera.getCameraVRP()
+        var oldCameraVRP = Camera.current.getCameraVRP()
         this.tx = oldCameraVRP[0]
         this.ty = oldCameraVRP[1]
         this.tz = oldCameraVRP[2]
@@ -188,8 +188,8 @@ class skyBox extends Drawable{
 
         //TODO: add view reference pointer repostitioning to 0 in order to make the cube render at the center and to never be able to go outside of it (this leverages the disabled depth drawing)
        	gl.uniformMatrix4fv(skyBox.uModelMatrixShader, false, flatten(this.modelMatrix));
-        gl.uniformMatrix4fv(skyBox.uCameraMatrixShader, false, flatten(camera.cameraMatrix));
-        gl.uniformMatrix4fv(skyBox.uProjectionMatrixShader, false, flatten(camera.projectionMatrix));
+        gl.uniformMatrix4fv(skyBox.uCameraMatrixShader, false, flatten(Camera.current.cameraMatrix));
+        gl.uniformMatrix4fv(skyBox.uProjectionMatrixShader, false, flatten(Camera.current.projectionMatrix));
                     
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, skyBox.indexBuffer);
         
@@ -203,7 +203,7 @@ class skyBox extends Drawable{
     	gl.disableVertexAttribArray(skyBox.aPositionShader);    
     	gl.disableVertexAttribArray(skyBox.aTextureCoordShader);    
         gl.enable(gl.DEPTH_TEST) //Slide 11 in L07/P3: To ensure that the skybox doesn’t occlude anything else, we’ll just disable depth testing before rendering it, and re-enable them after
-        camera.setCameraVRP(oldCameraVRP)
+        Camera.current.setCameraVRP(oldCameraVRP)
     }
 }
 

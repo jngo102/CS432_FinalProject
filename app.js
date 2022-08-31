@@ -2,7 +2,8 @@ var canvas;
 var gl;
 
 const FRAME_TIME = 1 / 60;
-var camera;
+var shipCam;
+var distanceCam;
 var cameraController;
 var monkey;
 var plane;
@@ -24,7 +25,7 @@ var pluto;
 var sunRotation = 0;
 
 const orbitFactor = 0.01;
-const orbitAngles = {
+var orbitAngles = {
     "Mercury": 0,
     "Venus": 0,
     "Earth": 0,
@@ -58,6 +59,30 @@ const orbitSpeeds = {
     "Uranus": 6.8,
     "Neptune": 5.4,
     "Pluto": 6.1,
+};
+
+const spinSpeeds = {
+    "Mercury": 10.83,
+    "Venus": -6.52,
+    "Earth": 15.74,
+    "Mars": 8.66,
+    "Jupiter": 45.58,
+    "Saturn": 36.84,
+    "Uranus": 14.79,
+    "Neptune": 9.72,
+    "Pluto": 10.62,
+};
+
+var planetRotations = {
+    "Mercury": 0,
+    "Venus": 0,
+    "Earth": 0,
+    "Mars": 0,
+    "Jupiter": 0,
+    "Saturn": 0,
+    "Uranus": 0,
+    "Neptune": 0,
+    "Pluto": 0,
 };
 
 var runTime = 0;
@@ -167,9 +192,11 @@ window.onload = function init() {
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
-    camera = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 1000);
-    camera.vrp = vec3(0, 0, 108);
-    camera.lookAt(vec3(0, 0, -1));
+    distanceCam = new Camera(vec3(100, 100, 100), u, v, n, 65, 16 / 9, 0.1, 1000);
+    distanceCam.lookAt(vec3(0, 0, 0));
+    shipCam = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 1000);
+    shipCam.vrp = vec3(0, 0, 108);
+    shipCam.lookAt(vec3(0, 0, -1));
     var sun = new Light(
         vec3(0, 0, -1), 
         vec3(0, 0, 0), 
@@ -219,7 +246,9 @@ function logic(deltaTime) {
     Sun.setRotation(0, sunRotation, 0);
     [mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto].forEach(function (body) {
         orbitAngles[body.name] += (orbitSpeeds[body.name] * deltaTime * orbitFactor) % 360;
+        planetRotations[body.name] += (spinSpeeds[body.name] * deltaTime) % 360;
         body.setPosition(orbitDistances[body.name] * Math.sin(orbitAngles[body.name]), 0, orbitDistances[body.name] * Math.cos(orbitAngles[body.name]));
+        body.setRotation(0, planetRotations[body.name], 0);
     });
 }
 
