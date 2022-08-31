@@ -21,6 +21,7 @@ var saturnRings;
 var uranus;
 var neptune;
 var pluto;
+var bodies;
 
 var sunRotation = 0;
 
@@ -189,6 +190,8 @@ window.onload = function init() {
         vec3(orbitDistances["Pluto"], 0, 0), 
         -0.1);
 
+    bodies = [Sun, mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto];
+
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
@@ -256,7 +259,7 @@ function logic(deltaTime) {
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     sky.draw();
-    [Sun, mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto].forEach(function (body) {
+    bodies.forEach(function (body) {
         body.draw();
     });
 }
