@@ -1,12 +1,12 @@
 class Plane extends Drawable {
-    constructor(transform, scale, rotation, texturePath) {
+    constructor(transform, scale, rotation, texturePath, vshader="../shaders/vshader.glsl", fshader="../shaders/fshader.glsl") {
         super(transform[0], transform[1], transform[2], scale, rotation[0], rotation[1], rotation[2]);
         if (this.shaderProgram == -1) {
-            this.initialize(texturePath);
+            this.initialize(texturePath, vshader, fshader);
         }
     }
 
-    initialize(texturePath) {
+    initialize(texturePath, vshader, fshader) {
         var vertices = [
             vec3(-1, 0, 1),
             vec3(1, 0, 1),
@@ -43,7 +43,7 @@ class Plane extends Drawable {
             this.meshes.push(mesh);
             mesh.computeNormals();
     
-            this.setupGL();
+            this.setupGL(vshader, fshader);
         });
     }
 }

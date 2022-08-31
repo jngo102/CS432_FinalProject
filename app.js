@@ -22,6 +22,7 @@ var uranus;
 var neptune;
 var pluto;
 var bodies;
+var clickables;
 
 var sunRotation = 0;
 
@@ -91,7 +92,7 @@ var runTime = 0;
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
     canvas.onclick = function() {
-        canvas.requestPointerLock();
+        //canvas.requestPointerLock();
     }
     // Resize canvas to fit window
     canvas.width = canvas.clientWidth;
@@ -219,12 +220,11 @@ window.onload = function init() {
         new PlayerAction("KeyD"),
         new PlayerAction("KeyW"),
         new PlayerAction("KeyS"),
-        new PlayerAction("KeyE"),
         new PlayerAction("Space"),
         new PlayerAction("ShiftLeft"),
     );
-    inputManager = new InputManager(window, inputActions, 2);
-    cameraController = new CameraController(inputManager);
+    inputManager = new InputManager(inputActions, 2);
+    cameraController = new CameraController();
 
     var _ = new LightManager([sun, flashlight]);
 
