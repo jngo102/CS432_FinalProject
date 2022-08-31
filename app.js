@@ -21,6 +21,8 @@ var uranus;
 var neptune;
 var pluto;
 
+var celestialBodies = [];
+
 var sunRotation = 0;
 
 const orbitFactor = 0.01;
@@ -61,6 +63,11 @@ const orbitSpeeds = {
 };
 
 var runTime = 0;
+
+var fov = 65
+var aspectRatio = 16 / 9
+var near = 0.1
+var far = 1000
 
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
@@ -172,10 +179,17 @@ window.onload = function init() {
         -0.1,
         vec3(0, 0, 0));
 
+    mirrorCube = new reflectiveCube(
+        vec3(0, 0, 0),
+        1,
+        vec3(0, 0, 0)
+    )
+
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
-    camera = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 1000);
+
+    camera = new Camera(vec3(0, 1, 0), u, v, n, fov, aspectRatio, near, far);
     camera.vrp = vec3(0, 0, 108);
     camera.lookAt(vec3(0, 0, -1));
     var sun = new Light(
@@ -206,6 +220,8 @@ window.onload = function init() {
 
     var _ = new LightManager([sun, flashlight]);
 
+    celestialBodies = [Sun, mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto, mirrorCube]
+
     update();
 };
 
@@ -235,7 +251,10 @@ function logic(deltaTime) {
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     sky.draw();
-    [Sun, mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto].forEach(function (body) {
+    // [Sun, mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto].forEach(function (body) {
+    //     body.draw();
+    // });
+    celestialBodies.forEach(function (body) {
         body.draw();
     });
 }
