@@ -215,7 +215,7 @@ function logic(deltaTime) {
     cameraController.update(deltaTime);
     inputManager.update(deltaTime);
 
-    sunRotation = (sunRotation + deltaTime * orbitFactor) % 360;
+    sunRotation = (sunRotation + deltaTime * 0.1) % 360;
     Sun.setRotation(0, sunRotation, 0);
     [mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto].forEach(function (body) {
         orbitAngles[body.name] += (orbitSpeeds[body.name] * deltaTime * orbitFactor) % 360;
