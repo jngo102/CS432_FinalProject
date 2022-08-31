@@ -37,11 +37,11 @@ class Drawable {
         this.updateModelMatrix();
     }
 
-    getModelRotation() {
+    getRotation() {
         return this.rotation;
     }
 
-    setModelRotation(rotX, rotY, rotZ) {
+    setRotation(rotX, rotY, rotZ) {
         this.rotX = rotX;
         this.rotY = rotY;
         this.rotZ = rotZ;
