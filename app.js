@@ -90,87 +90,79 @@ window.onload = function init() {
         "../models/SolarSystem/Sun/Sun.mtl",
         vec3(0, 0, 0),
         -0.1,
-        vec3(0, 0, 0));
+        vec3(0, 0, 0),
+        "../shaders/vshader-flat.glsl",
+        "../shaders/fshader-flat.glsl");
 
     mercury = new ObjModel(
         "Mercury",
         "../models/SolarSystem/Mercury/Mercury.obj",
         "../models/SolarSystem/Mercury/Mercury.mtl",
         vec3(orbitDistances["Mercury"], 0, 0),
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     venus = new ObjModel(
         "Venus",
         "../models/SolarSystem/Venus/Venus.obj",
         "../models/SolarSystem/Venus/Venus.mtl",
         vec3(orbitDistances["Venus"], 0, 0),
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     earth = new ObjModel(
         "Earth",
         "../models/SolarSystem/Earth/Earth.obj", 
         "../models/SolarSystem/Earth/Earth.mtl",
         vec3(orbitDistances["Earth"], 0, 0), 
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     mars = new ObjModel(
         "Mars",
         "../models/SolarSystem/Mars/Mars.obj", 
         "../models/SolarSystem/Mars/Mars.mtl",
         vec3(orbitDistances["Mars"], 0, 0), 
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
     
     jupiter = new ObjModel(
         "Jupiter",
         "../models/SolarSystem/Jupiter/Jupiter.obj",
         "../models/SolarSystem/Jupiter/Jupiter.mtl",
         vec3(orbitDistances["Jupiter"], 0, 0), 
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     saturnBody = new ObjModel(
         "Saturn",
         "../models/SolarSystem/Saturn/SaturnBody.obj",
         "../models/SolarSystem/Saturn/SaturnBody.mtl",
         vec3(orbitDistances["Saturn"], 0, 0), 
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     saturnRings = new ObjModel(
         "Saturn",
         "../models/SolarSystem/Saturn/SaturnRings.obj",
         "../models/SolarSystem/Saturn/SaturnRings.mtl",
         vec3(orbitDistances["Saturn"], 0, 0),
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     uranus = new ObjModel(
         "Uranus",
         "../models/SolarSystem/Uranus/Uranus.obj",
         "../models/SolarSystem/Uranus/Uranus.mtl",
         vec3(orbitDistances["Uranus"], 0, 0), 
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     neptune = new ObjModel(
         "Neptune",
         "../models/SolarSystem/Neptune/Neptune.obj",
         "../models/SolarSystem/Neptune/Neptune.mtl",
         vec3(orbitDistances["Neptune"], 0, 0), 
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     pluto = new ObjModel(
         "Pluto",
         "../models/SolarSystem/Pluto/Pluto.obj",
         "../models/SolarSystem/Pluto/Pluto.mtl",
         vec3(orbitDistances["Pluto"], 0, 0), 
-        -0.1,
-        vec3(0, 0, 0));
+        -0.1);
 
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
@@ -179,12 +171,12 @@ window.onload = function init() {
     camera.vrp = vec3(0, 0, 108);
     camera.lookAt(vec3(0, 0, -1));
     var sun = new Light(
-        vec3(0, 100, 0), 
-        vec3(-1, -1, 1), 
-        vec4(0.2, 0.2, 0.2, 1), 
-        vec4(0.4, 0.4, 0.4, 1), 
-        vec4(0.4, 0.4, 0.4, 1), 
-        1, 0, 45, 1);
+        vec3(0, 0, -1), 
+        vec3(0, 0, 0), 
+        vec4(0, 0, 0, 1), 
+        vec4(1, 1, 1, 1), 
+        vec4(1, 1, 1, 1), 
+        1, 0, 128, 0);
     var flashlight = new Light(
         vec3(0, 0, 0), 
         vec3(0, -1, 0), 

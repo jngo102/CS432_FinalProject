@@ -2,14 +2,14 @@ class ObjModel extends Drawable {
     faces = [];
     name = "";
     materialsMap = [];
-    constructor(name, objPath, mtlPath, position, scale, rotation) {
+    constructor(name, objPath, mtlPath, position = vec3(0, 0, 0), scale = 1, rotation = vec3(0, 0, 0), vshader="../shaders/vshader.glsl", fshader="../shaders/fshader.glsl") {
         super(position[0], position[1], position[2], scale, rotation[0], rotation[1], rotation[2]);
         this.name = name;
         this.parseObj(objPath);
-        this.parseMtl(mtlPath);
+        this.parseMtl(mtlPath, vshader, fshader);
     }
 
-    parseMtl(mtlPath) {
+    parseMtl(mtlPath, vshader, fshader) {
         var mtlFile = loadFileAJAX(mtlPath);
         var mats = mtlFile.split('\r\n\r\nnewmtl ');
         console.log(mats)
@@ -73,7 +73,7 @@ class ObjModel extends Drawable {
                             this.meshes.push(newMesh);
 
                             if (this.meshes.length == this.materialsMap.length) {
-                                this.setupGL();
+                                this.setupGL(vshader, fshader);
                             }
                         }
                     }

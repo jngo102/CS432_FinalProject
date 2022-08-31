@@ -67,8 +67,8 @@ class Drawable {
         this.modelMatrix = mult(t, mult(s, mult(rz, mult(ry, rx))));
     }
 
-    setupGL() {
-        this.shaderProgram = initShaders(gl, "../shaders/vshader.glsl", "../shaders/fshader.glsl");
+    setupGL(vshader, fshader) {
+        this.shaderProgram = initShaders(gl, vshader, fshader);
 
         this.meshes.forEach(mesh => {
             mesh.setupGL(this.shaderProgram);
