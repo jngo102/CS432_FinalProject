@@ -101,10 +101,10 @@ class skyBox extends Drawable{
     //     //         // TEXTURE_CUBE_MAP_NEGATIVE_Z	0x851A
 
                 gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + skyBox.counter, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, skyBox.cubemap_image[skyBox.counter])
-
+                skyBox.counter++;
+                console.log(skyBox.counter)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-                skyBox.counter++;
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE)  
@@ -116,13 +116,15 @@ class skyBox extends Drawable{
         for (var i = 0; i < 6; i++) {
             gl.bindTexture(gl.TEXTURE_CUBE_MAP, skyBox.texture) //citing the creator of WebGLfundamentals for the below use of waiting for an image to load: https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
             gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, gl.RGB, 1, 1, 0, gl.RGB, gl.UNSIGNED_BYTE, 
-                new Uint8Array([0, 0, 255]));
+                new Uint8Array([0, 0, 255, 255]));
             // skyBox.cubemap_image[i] = new Image();
             // skyBox.cubemap_image[i].onload = skyBox.initializeTexture; //perhaps this.initializeTexture
             // skyBox.cubemap_image[i].src = imagesSources[i];
 
             skyBox.cubemap_image[i] = new Image();
             skyBox.cubemap_image[i].addEventListener('load',skyBox.initializeTexture)
+            skyBox.cubemap_image[i].fetchPriority = 'high'
+            // skyBox.cubemap_image[i].onload = skyBox.initializeTexture
             skyBox.cubemap_image[i].src = imagesSources[i];
         }
     }
@@ -196,9 +198,7 @@ class skyBox extends Drawable{
         gl.enableVertexAttribArray(skyBox.aPositionShader);    
         gl.enableVertexAttribArray(skyBox.aTextureCoordShader);
         
-
         gl.drawElements(gl.TRIANGLES, skyBox.indices.length, gl.UNSIGNED_BYTE, 0);
-        
         
     	gl.disableVertexAttribArray(skyBox.aPositionShader);    
     	gl.disableVertexAttribArray(skyBox.aTextureCoordShader);    

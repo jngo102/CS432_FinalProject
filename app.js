@@ -23,7 +23,7 @@ var bodies;
 var clickables;
 
 var cone;
-var selectedBody = "";
+var selectedBodyName = "";
 
 var sunRotation = 0;
 
@@ -280,11 +280,15 @@ function logic(deltaTime) {
         body.setRotation(0, planetRotations[body.name], 0);
     });
 
-    if (selectedBody != "") {
+    if (selectedBodyName != "") {
         bodies.forEach((body) => {
-            if (body.name == selectedBody) {
+            if (body.name == selectedBodyName) {
                 var bodyPos = body.getPosition();
                 cone.setPosition(bodyPos[0], bodyPos[1] + diameters[body.name] * 0.05 + 4, bodyPos[2]);
+                
+                distanceCam.setCameraVRP(vec3( bodyPos[0], bodyPos[1] + diameters[body.name] * 0.1, bodyPos[2] + diameters[body.name] * 0.1 ))
+                distanceCam.lookAt(bodyPos);
+                // distanceCam.lookAt(sun.getPosition())
             }
         });  
     }
@@ -301,7 +305,10 @@ window.addEventListener("keydown", function(event) {
         index++;
     }
     var bodyName = bodies[index].name;
-    selectedBody = bodyName;
+    selectedBodyName = bodyName;
+    
+    var selectedBody = bodies[index];
+    console.log(selectedBody)
 
     ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
     ctx.fillStyle = "#ffffff";
@@ -338,7 +345,7 @@ function render() {
     bodies.forEach(function (body) {
         body.draw();
     });
-    if (selectedBody != "") {
+    if (selectedBodyName != "") {
         cone.draw();
     }
 }
