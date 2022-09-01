@@ -1,16 +1,14 @@
 var canvas;
+var textCanvas;
 var gl;
 
 const FRAME_TIME = 1 / 60;
 var shipCam;
 var distanceCam;
 var cameraController;
-var monkey;
-var plane;
 var inputManager;
-var sun;
 
-var Sun;
+var sun;
 var mercury;
 var venus;
 var earth;
@@ -23,6 +21,9 @@ var neptune;
 var pluto;
 var bodies;
 var clickables;
+
+var cone;
+var selectedBody = "";
 
 var sunRotation = 0;
 
@@ -87,16 +88,31 @@ var planetRotations = {
     "Pluto": 0,
 };
 
+var ctx;
+var bodyInfo = {
+    "Sun": "The Sun is the star at the center of the Solar System. It is a nearly perfect sphere of hot plasma, with internal convective motion that can accelerate the Sun in order to maintain its temperature. It is by far the most important source of energy for life on Earth. Its diameter is about 1.39 million kilometers, and its mass is about 330,000 times that of Earth, accounting for about 99.86% of the total mass of the Solar System.",
+    "Mercury": "Mercury is the smallest and innermost planet in the Solar System. Its orbital period is 88 days, the shortest of all the planets in the Solar System. It is named after the Roman deity Mercury, the messenger of the gods.",
+    "Venus": "Venus is the second planet from the Sun, orbiting it every 224.7 Earth days. It has the longest rotation period of any planet in the Solar System and rotates in the opposite direction to most other planets. It has no natural satellites. It is named after the Roman goddess of love and beauty.",
+    "Earth": "Earth is the third planet from the Sun and the only object in the Universe known to harbor life. According to radiometric dating and other sources of evidence, Earth formed over 4.5 billion years ago. Earth's gravity interacts with other objects in space, especially the Sun and the Moon.",
+    "Mars": "Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, after Mercury. In English, Mars is called 'the Red Planet' because the reddish iron oxide prevalent on its surface gives it a reddish appearance that is distinctive among the astronomical bodies visible to the naked eye.",
+    "Jupiter": "Jupiter is the fifth planet from the Sun and the largest in the Solar System. It is a giant planet with a mass one-thousandth that of the Sun, but is two and a half times the mass of all the other planets in the Solar System combined. Jupiter is a gas giant; it is a gas giant because it is mostly hydrogen and helium.",
+    "Saturn": "Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter. It is a gas giant with an average radius about nine times that of Earth. It has only one-eighth the average density of Earth, but with its larger volume, it is over twice as dense as Earth.",
+    "Uranus": "Uranus is the seventh planet from the Sun. It has the third-largest planetary radius and fourth-largest planetary mass in the Solar System. Uranus is similar in composition to Neptune, and both have bulk chemical compositions which are similar to those of the other two giant planets in the Solar System, Neptune and Sun.",
+    "Neptune": "Neptune is the eighth and farthest known planet from the Sun. In the Solar System, it is the fourth-largest planet by diameter, the third-most-massive planet, and the densest giant planet. Neptune is 17 times the mass of Earth and is slightly more massive than its near-twin Uranus.",
+    "Pluto": "Pluto is the ninth and most distant planet from the Sun. It is a dwarf planet in the Kuiper belt, a ring of bodies beyond the orbit of the Sun. It was the first Kuiper belt object to be discovered. The name is a portmanteau of the words Pluto and dwarf.",
+};
+
 var runTime = 0;
 
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
     canvas.onclick = function() {
-        //canvas.requestPointerLock();
+        canvas.requestPointerLock();
     }
-    // Resize canvas to fit window
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
+
+    // Resize canvas to fit most of the window
+    canvas.width = canvas.clientWidth - 256;
+    canvas.height = canvas.clientHeight - 256;
     gl = canvas.getContext('webgl2');
     if (!gl) { alert("WebGL 2.0 isn't available"); }
 
@@ -105,13 +121,16 @@ window.onload = function init() {
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0.5, 0.5, 0.5, 1);
 
+    textCanvas = document.getElementById("text-canvas");
+    ctx = textCanvas.getContext("2d");
+
     sky = new skyBox(
         vec3(0, 0, 0),
         1,
         vec3(0, 0, 0)
     );
     
-    Sun = new ObjModel(
+    sun = new ObjModel(
         "Sun",
         "../models/SolarSystem/Sun/Sun.obj",
         "../models/SolarSystem/Sun/Sun.mtl",
@@ -191,7 +210,9 @@ window.onload = function init() {
         vec3(orbitDistances["Pluto"], 0, 0), 
         -0.1);
 
-    bodies = [Sun, mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto];
+    bodies = [sun, mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto];
+
+    cone = new Cone(vec3(0, 0, 64), 2, vec3(0, 0, -90), "../shaders/vshader-flat.glsl", "../shaders/fshader-flat.glsl");
 
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
@@ -200,21 +221,13 @@ window.onload = function init() {
     distanceCam.lookAt(vec3(0, 0, 0));
     shipCam = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 1000);
     shipCam.vrp = vec3(0, 0, 108);
-    shipCam.lookAt(vec3(0, 0, -1));
-    var sun = new Light(
-        vec3(0, 0, -1), 
+    var sunLight = new Light(
         vec3(0, 0, 0), 
-        vec4(0, 0, 0, 1), 
+        vec3(0, 0, 0),
+        vec4(0.25, 0.25, 0.25, 1), 
         vec4(1, 1, 1, 1), 
         vec4(1, 1, 1, 1), 
-        1, 0, 128, 0);
-    var flashlight = new Light(
-        vec3(0, 0, 0), 
-        vec3(0, -1, 0), 
-        vec4(0.4, 0.4, 0.4, 1), 
-        vec4(1, 1, 1, 1), 
-        vec4(1, 1, 1, 1), 
-        1, 10, 30, 2);
+        1, 128, 360, 0);
     var inputActions = new InputActions(
         new PlayerAction("KeyA"),
         new PlayerAction("KeyD"),
@@ -226,7 +239,7 @@ window.onload = function init() {
     inputManager = new InputManager(inputActions, 2);
     cameraController = new CameraController();
 
-    var _ = new LightManager([sun, flashlight]);
+    var _ = new LightManager([sunLight]);
 
     update();
 };
@@ -246,13 +259,22 @@ function logic(deltaTime) {
     inputManager.update(deltaTime);
 
     sunRotation = (sunRotation + deltaTime * 0.1) % 360;
-    Sun.setRotation(0, sunRotation, 0);
+    sun.setRotation(0, sunRotation, 0);
     [mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto].forEach(function (body) {
         orbitAngles[body.name] += (orbitSpeeds[body.name] * deltaTime * orbitFactor) % 360;
         planetRotations[body.name] += (spinSpeeds[body.name] * deltaTime) % 360;
         body.setPosition(orbitDistances[body.name] * Math.sin(orbitAngles[body.name]), 0, orbitDistances[body.name] * Math.cos(orbitAngles[body.name]));
         body.setRotation(0, planetRotations[body.name], 0);
     });
+
+    if (selectedBody != "") {
+        bodies.forEach((body) => {
+            if (body.name == selectedBody) {
+                var bodyPos = body.getPosition();
+                cone.setPosition(bodyPos[0], bodyPos[1] + (selectedBody == "Sun" ? 64 : 8), bodyPos[2]);
+            }
+        });   
+    }
 }
 
 // Update only graphics
@@ -262,4 +284,44 @@ function render() {
     bodies.forEach(function (body) {
         body.draw();
     });
+    if (selectedBody != "") {
+        cone.draw();
+    }
+}
+
+function setSelectedBody() {
+    var value = document.getElementById("body-select").value;
+    bodies.forEach((body) => {
+        if (body.name == value) {
+            selectedBody = value;
+            console.log("Selected body set to " + value);
+            ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+            ctx.fillStyle = "#ffffff";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            ctx.font = "24px Arial";
+            var info = bodyInfo[value];
+            var infoWords = info.split(" ");
+            infoLines = [];
+            var line = "";
+            infoWords.forEach((word, index) => {
+                var testLine = line;
+                testLine += word + " ";
+                if (testLine.length >= 84) {
+                    infoLines.push(line);
+                    line = word + " ";
+                } else if (index == infoWords.length - 1) {
+                    line = testLine;
+                    infoLines.push(line);
+                } else {
+                    line = testLine;
+                }
+            });
+
+            infoLines.forEach((line, index) => {
+                console.log("Line: " + line);
+                ctx.fillText(line, 32, 32 + index * 24);
+            });
+        }
+    })
 }

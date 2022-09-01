@@ -75,20 +75,29 @@ class Mesh {
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(this.indices), gl.STATIC_DRAW);
 
-        this.texCoordBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, flatten(this.texCoords), gl.STATIC_DRAW);
-        this.texCoordShader = gl.getAttribLocation(shaderProgram, "texCoord");
-        this.texUnitShader = gl.getUniformLocation(shaderProgram, "texUnit");
+        if (this.material != null) {
+            this.texCoordBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, flatten(this.texCoords), gl.STATIC_DRAW);
+            this.texCoordShader = gl.getAttribLocation(shaderProgram, "texCoord");
+            this.texUnitShader = gl.getUniformLocation(shaderProgram, "texUnit");
+        }
 
         this.modelMatrixShader = gl.getUniformLocation(shaderProgram, "modelMatrix");
         this.cameraMatrixShader = gl.getUniformLocation(shaderProgram, "cameraMatrix");
         this.projectionMatrixShader = gl.getUniformLocation(shaderProgram, "projectionMatrix");
 
+        if (this.normals.length <= 0) {
+            console.log("This mesh does not have material or lighting properties.");
+            this.lit = false;
+            return;
+        }
+
         this.normalBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, flatten(this.normals), gl.STATIC_DRAW);
         this.normalShader = gl.getAttribLocation(shaderProgram, "normal");
+
         if (this.normalShader == -1 || this.normalShader == null) {
             console.log("This mesh does not have material or lighting properties.");
             this.lit = false;
@@ -110,15 +119,15 @@ class Mesh {
         this.lightSpecularShader1 = gl.getUniformLocation(shaderProgram, "lightSpecular1");
         this.lightTypeShader1 = gl.getUniformLocation(shaderProgram, "lightType1");
 
-        this.lightSpotAngleShader2 = gl.getUniformLocation(shaderProgram, "lightSpotAngle2");
-        this.lightCutoffShader2 = gl.getUniformLocation(shaderProgram, "lightCutoff2");
-        this.lightStatusShader2 = gl.getUniformLocation(shaderProgram, "lightStatus2");
-        this.lightLocationShader2 = gl.getUniformLocation(shaderProgram, "lightLocation2");
-        this.lightDirectionShader2 = gl.getUniformLocation(shaderProgram, "lightDirection2");
-        this.lightAmbientShader2 = gl.getUniformLocation(shaderProgram, "lightAmbient2");
-        this.lightDiffuseShader2 = gl.getUniformLocation(shaderProgram, "lightDiffuse2");
-        this.lightSpecularShader2 = gl.getUniformLocation(shaderProgram, "lightSpecular2");
-        this.lightTypeShader2 = gl.getUniformLocation(shaderProgram, "lightType2");
+        // this.lightSpotAngleShader2 = gl.getUniformLocation(shaderProgram, "lightSpotAngle2");
+        // this.lightCutoffShader2 = gl.getUniformLocation(shaderProgram, "lightCutoff2");
+        // this.lightStatusShader2 = gl.getUniformLocation(shaderProgram, "lightStatus2");
+        // this.lightLocationShader2 = gl.getUniformLocation(shaderProgram, "lightLocation2");
+        // this.lightDirectionShader2 = gl.getUniformLocation(shaderProgram, "lightDirection2");
+        // this.lightAmbientShader2 = gl.getUniformLocation(shaderProgram, "lightAmbient2");
+        // this.lightDiffuseShader2 = gl.getUniformLocation(shaderProgram, "lightDiffuse2");
+        // this.lightSpecularShader2 = gl.getUniformLocation(shaderProgram, "lightSpecular2");
+        // this.lightTypeShader2 = gl.getUniformLocation(shaderProgram, "lightType2");
     }
 
     computeNormals() {
@@ -155,8 +164,7 @@ class Mesh {
     draw(modelMatrix) {
         if (this.positionBuffer == -1 ||
             this.colorBuffer == -1 ||
-            this.indexBuffer == -1 ||
-            this.texCoordBuffer == -1) {
+            this.indexBuffer == -1) {
             return;
         }
         gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
@@ -167,23 +175,23 @@ class Mesh {
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 
-        if (this.lit) {
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
-            gl.vertexAttribPointer(this.normalShader, 3, gl.FLOAT, false, 0, 0);
+        if (this.material != null) {
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
+            gl.vertexAttribPointer(this.texCoordShader, 2, gl.FLOAT, false, 0, 0);
+
+            gl.activeTexture(gl.TEXTURE0);
+            gl.bindTexture(gl.TEXTURE_2D, this.material.texture);
+            gl.uniform1i(this.texUnitShader, 0);
         }
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordBuffer);
-        gl.vertexAttribPointer(this.texCoordShader, 2, gl.FLOAT, false, 0, 0);
-
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this.material.texture);
-        gl.uniform1i(this.texUnitShader, 0);
 
         gl.uniformMatrix4fv(this.modelMatrixShader, false, flatten(modelMatrix));
         gl.uniformMatrix4fv(this.cameraMatrixShader, false, flatten(Camera.current.cameraMatrix));
         gl.uniformMatrix4fv(this.projectionMatrixShader, false, flatten(Camera.current.projectionMatrix));
 
         if (this.lit) {
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
+            gl.vertexAttribPointer(this.normalShader, 3, gl.FLOAT, false, 0, 0);
+
             gl.uniform4fv(this.matAmbientShader, this.material.ambient);
             gl.uniform4fv(this.matDiffuseShader, this.material.diffuse);
             gl.uniform4fv(this.matSpecularShader, this.material.specular);
@@ -201,15 +209,15 @@ class Mesh {
             gl.uniform4fv(this.lightDiffuseShader1, lights[0].diffuse);
             gl.uniform4fv(this.lightSpecularShader1, lights[0].specular);
 
-            gl.uniform1i(this.lightStatusShader2, lights[1].status);
-            gl.uniform1i(this.lightTypeShader2, lights[1].type);
-            gl.uniform1f(this.lightSpotAngleShader2, lights[1].spotAngle);
-            gl.uniform1f(this.lightCutoffShader2, lights[1].cutoff);
-            gl.uniform3fv(this.lightLocationShader2, lights[1].location);
-            gl.uniform3fv(this.lightDirectionShader2, lights[1].direction);
-            gl.uniform4fv(this.lightAmbientShader2, lights[1].ambient);
-            gl.uniform4fv(this.lightDiffuseShader2, lights[1].diffuse);
-            gl.uniform4fv(this.lightSpecularShader2, lights[1].specular);
+            // gl.uniform1i(this.lightStatusShader2, lights[1].status);
+            // gl.uniform1i(this.lightTypeShader2, lights[1].type);
+            // gl.uniform1f(this.lightSpotAngleShader2, lights[1].spotAngle);
+            // gl.uniform1f(this.lightCutoffShader2, lights[1].cutoff);
+            // gl.uniform3fv(this.lightLocationShader2, lights[1].location);
+            // gl.uniform3fv(this.lightDirectionShader2, lights[1].direction);
+            // gl.uniform4fv(this.lightAmbientShader2, lights[1].ambient);
+            // gl.uniform4fv(this.lightDiffuseShader2, lights[1].diffuse);
+            // gl.uniform4fv(this.lightSpecularShader2, lights[1].specular);
         }
 
         gl.enableVertexAttribArray(this.positionShader);
@@ -217,13 +225,17 @@ class Mesh {
         if (this.lit) {
             gl.enableVertexAttribArray(this.normalShader);   
         }
-        gl.enableVertexAttribArray(this.texCoordShader);
+        if (this.material != null) {
+            gl.enableVertexAttribArray(this.texCoordShader);
+        }
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0);
         gl.disableVertexAttribArray(this.positionShader);
         gl.disableVertexAttribArray(this.colorShader);
         if (this.lit) {
             gl.disableVertexAttribArray(this.normalShader);
         }
-        gl.disableVertexAttribArray(this.texCoordShader);
+        if (this.material != null) {
+            gl.disableVertexAttribArray(this.texCoordShader);
+        }
     }
 }
