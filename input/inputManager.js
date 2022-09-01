@@ -36,10 +36,6 @@ class InputManager {
                     this.inputActions.descend.isPressed = true;
                     this.inputActions.descend.wasPressed = true;
                     break;
-                case "KeyP":
-                    console.log("Pressed E");
-                    Camera.current = (Camera.current == shipCam) ? distanceCam : shipCam;
-                    break;
             }
         });
 

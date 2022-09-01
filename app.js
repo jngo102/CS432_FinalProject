@@ -4,7 +4,7 @@ var gl;
 
 const FRAME_TIME = 1 / 60;
 var shipCam;
-var distanceCam;
+var planetCam;
 var cameraController;
 var inputManager;
 
@@ -51,6 +51,19 @@ const orbitDistances = {
     "Neptune": 176,
     "Pluto": 192,
 };
+
+const diameters = {
+    "Sun": 865,
+    "Mercury": 3.03,
+    "Venus": 7.52,
+    "Earth": 7.92,
+    "Mars": 4.21,
+    "Jupiter": 86.9,
+    "Saturn": 72.4,
+    "Uranus": 31.5,
+    "Neptune": 30.6,
+    "Pluto": 1.48,
+}
 
 const orbitSpeeds = {
     "Mercury": 47.9,
@@ -227,7 +240,7 @@ window.onload = function init() {
         vec4(0.25, 0.25, 0.25, 1), 
         vec4(1, 1, 1, 1), 
         vec4(1, 1, 1, 1), 
-        1, 128, 360, 0);
+        1, 128, 0, 0);
     var inputActions = new InputActions(
         new PlayerAction("KeyA"),
         new PlayerAction("KeyD"),
@@ -271,11 +284,52 @@ function logic(deltaTime) {
         bodies.forEach((body) => {
             if (body.name == selectedBody) {
                 var bodyPos = body.getPosition();
-                cone.setPosition(bodyPos[0], bodyPos[1] + (selectedBody == "Sun" ? 64 : 8), bodyPos[2]);
+                cone.setPosition(bodyPos[0], bodyPos[1] + diameters[body.name] * 0.05 + 4, bodyPos[2]);
             }
-        });   
+        });  
     }
 }
+
+window.addEventListener("keydown", function(event) {
+    if (!event.code.includes("Digit")) {
+        return;
+    }
+    var digitCode = event.code;
+    var index = parseInt(digitCode.replace("Digit", ""));
+    // Skip Saturn's rings
+    if (index > 6) {
+        index++;
+    }
+    var bodyName = bodies[index].name;
+    selectedBody = bodyName;
+
+    ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.font = "24px Arial";
+    var info = bodyInfo[bodyName];
+    var infoWords = info.split(" ");
+    infoLines = [];
+    var line = "";
+    infoWords.forEach((word, index) => {
+        var testLine = line;
+        testLine += word + " ";
+        if (testLine.length >= 84) {
+            infoLines.push(line);
+            line = word + " ";
+        } else if (index == infoWords.length - 1) {
+            line = testLine;
+            infoLines.push(line);
+        } else {
+            line = testLine;
+        }
+    });
+
+    infoLines.forEach((line, index) => {
+        ctx.fillText(line, 32, 32 + index * 24);
+    });
+});
 
 // Update only graphics
 function render() {
@@ -287,41 +341,4 @@ function render() {
     if (selectedBody != "") {
         cone.draw();
     }
-}
-
-function setSelectedBody() {
-    var value = document.getElementById("body-select").value;
-    bodies.forEach((body) => {
-        if (body.name == value) {
-            selectedBody = value;
-            console.log("Selected body set to " + value);
-            ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
-            ctx.fillStyle = "#ffffff";
-            ctx.textAlign = "left";
-            ctx.textBaseline = "top";
-            ctx.font = "24px Arial";
-            var info = bodyInfo[value];
-            var infoWords = info.split(" ");
-            infoLines = [];
-            var line = "";
-            infoWords.forEach((word, index) => {
-                var testLine = line;
-                testLine += word + " ";
-                if (testLine.length >= 84) {
-                    infoLines.push(line);
-                    line = word + " ";
-                } else if (index == infoWords.length - 1) {
-                    line = testLine;
-                    infoLines.push(line);
-                } else {
-                    line = testLine;
-                }
-            });
-
-            infoLines.forEach((line, index) => {
-                console.log("Line: " + line);
-                ctx.fillText(line, 32, 32 + index * 24);
-            });
-        }
-    })
 }

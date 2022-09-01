@@ -21,28 +21,13 @@
         <script type="text/javascript" src="./app.js"></script>
     </head>
     <body>
-        <div class="container">
-            <canvas id="gl-canvas">
-                Not supported
-            </canvas>
-            <canvas id="text-canvas" width="1024" height="1080">
-                Not supported
-            </canvas>
-        </div>
-        <select id="body-select" onchange="setSelectedBody()">
-            <option id="sun-option" value="Sun">Sun</option>
-            <option id="mercury-option" value="Mercury">Mercury</option>
-            <option id="venus-option" value="Venus">Venus</option>
-            <option id="earth-option" value="Earth">Earth</option>
-            <option id="mars-option" value="Mars">Mars</option>
-            <option id="jupiter-option" value="Jupiter">Jupiter</option>
-            <option id="saturn-option" value="Saturn">Saturn</option>
-            <option id="uranus-option" value="Uranus">Uranus</option>
-            <option id="neptune-option" value="Neptune">Neptune</option>
-            <option id="pluto-option" value="Pluto">Pluto</option>
-        </select>
         <div>
             <h1>Instructions</h1>
+            <p>This is a relatively simple simulation of our solar system. It includes the Sun and the nine planets within it. Interplanetary distances are not accurate, but planet rotations and orbit speeds are scaled according to real data.</p>
+            <i>
+                Click on the right half of the canvas to capture your mouse cursor and prevent it from locking at the edges of the screen.
+                Press 'escape' to show your cursor again.
+            </i>
             <h2>Controls</h2>
             <table style="border:1px solid black; border-collapse: collapse">
                 <tr>
@@ -78,6 +63,14 @@
                     <td>Look around</td>
                 </tr>
             </table>
+        </div>
+        <div class="container">
+            <canvas id="gl-canvas">
+                Not supported
+            </canvas>
+            <canvas id="text-canvas" width="1024" height="1080">
+                Not supported
+            </canvas>
         </div>
     </body>
 </html>
