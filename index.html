@@ -8,8 +8,8 @@
         <script type="text/javascript" src="./drawables/material.js"></script>
         <script type="text/javascript" src="./drawables/mesh.js"></script>
         <script type="text/javascript" src="./drawables/drawable.js"></script>
+        <script type="text/javascript" src="./drawables/cone.js"></script>
         <script type="text/javascript" src="./drawables/objModel.js"></script>
-        <script type="text/javascript" src="./drawables/plane.js"></script>
         <script type="text/javascript" src="./drawables/skybox.js"></script>
         <script type="text/javascript" src="./input/playerAction.js"></script>
         <script type="text/javascript" src="./input/inputActions.js"></script>
@@ -21,19 +21,47 @@
         <script type="text/javascript" src="./app.js"></script>
     </head>
     <body>
-        <canvas id="gl-canvas">
-            Not supported
-        </canvas>
+        <div class="container">
+            <canvas id="gl-canvas">
+                Not supported
+            </canvas>
+            <canvas id="text-canvas" width="1024" height="1080">
+                Not supported
+            </canvas>
+        </div>
+        <select id="body-select" onchange="setSelectedBody()">
+            <option id="sun-option" value="Sun">Sun</option>
+            <option id="mercury-option" value="Mercury">Mercury</option>
+            <option id="venus-option" value="Venus">Venus</option>
+            <option id="earth-option" value="Earth">Earth</option>
+            <option id="mars-option" value="Mars">Mars</option>
+            <option id="jupiter-option" value="Jupiter">Jupiter</option>
+            <option id="saturn-option" value="Saturn">Saturn</option>
+            <option id="uranus-option" value="Uranus">Uranus</option>
+            <option id="neptune-option" value="Neptune">Neptune</option>
+            <option id="pluto-option" value="Pluto">Pluto</option>
+        </select>
     </body>
 </html>
 <style>
-    html, body {
-        width: 100%;
-        height: 100%;
+    body {
+        margin: 0;
     }
 
     #gl-canvas {
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
+        display: block;
+    }
+
+    .container {
+        position: relative;
+    }
+
+    #text-canvas {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 10;
     }
 </style>

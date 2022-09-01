@@ -69,7 +69,6 @@ class ObjModel extends Drawable {
                             var normals = this.materialsMap[i]["normals"];
                             var texCoords = this.materialsMap[i]["texCoords"];
                             var newMesh = Mesh.createMesh(vertices, colors, indices, normals, texCoords, material);
-                            newMesh.computeNormals();
                             this.meshes.push(newMesh);
 
                             if (this.meshes.length == this.materialsMap.length) {
@@ -138,27 +137,27 @@ class ObjModel extends Drawable {
                 }
             });
 
-            var tempNorms = [];
+            var tempNormals = [];
+
             this.faces.forEach((group) => {
                 group.forEach((info) => {
                     var infoArray = info.split('/');
                     var posIndex = parseInt(infoArray[0]) - 1;
-                    var texIndex = parseInt(infoArray[1]) - 1;
                     var normIndex = parseInt(infoArray[2]) - 1;
                     indices.push(posIndex);
-                    tempNorms.push(normals[normIndex]);
+                    tempNormals.push(normals[normIndex]);
                     colors.push(vec4(1, 1, 1, 1));
                 });
             });
 
-            normals = tempNorms;
+            normals = tempNormals;
 
             this.materialsMap.push({
                 "matName": matName, 
                 "vertices": vertices, 
                 "colors": colors, 
                 "indices": indices, 
-                "normals": normals, 
+                "normals": normals,
                 "texCoords": texCoords
             });
         });
