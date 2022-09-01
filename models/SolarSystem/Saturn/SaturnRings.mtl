@@ -1,7 +1,7 @@
-# Blender MTL File: 'Planets.blend'
+# Blender MTL File: 'SolarSystem.blend'
 # Material Count: 1
 
-newmtl Material.005
+newmtl ring
 Ns 359.999993
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -11,4 +11,4 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-map_Kd ../textures/solar-system/Neptune.jpg
+map_Kd ../textures/solar-system/SaturnRings.jpg

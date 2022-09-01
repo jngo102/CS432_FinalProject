@@ -12,3 +12,8 @@
 | D            | Move camera backward
 
 Click canvas and move mouse to look around
+
+## Sources:
+Several materials were referenced throughout the development of this project.
+- [Event key codes](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode)
+- [Planet rotation/orbit speeds](https://nssdc.gsfc.nasa.gov/planetary/factsheet/)

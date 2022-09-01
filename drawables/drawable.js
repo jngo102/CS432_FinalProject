@@ -26,11 +26,22 @@ class Drawable {
         return this.modelMatrix;
     }
 
-    getModelRotation() {
+    getPosition() {
+        return vec3(this.tx, this.ty, this.tz);
+    }
+
+    setPosition(x, y, z) {
+        this.tx = x;
+        this.ty = y;
+        this.tz = z;
+        this.updateModelMatrix();
+    }
+
+    getRotation() {
         return this.rotation;
     }
 
-    setModelRotation(rotX, rotY, rotZ) {
+    setRotation(rotX, rotY, rotZ) {
         this.rotX = rotX;
         this.rotY = rotY;
         this.rotZ = rotZ;
@@ -56,8 +67,8 @@ class Drawable {
         this.modelMatrix = mult(t, mult(s, mult(rz, mult(ry, rx))));
     }
 
-    setupGL() {
-        this.shaderProgram = initShaders(gl, "../shaders/vshader.glsl", "../shaders/fshader.glsl");
+    setupGL(vshader, fshader) {
+        this.shaderProgram = initShaders(gl, vshader, fshader);
 
         this.meshes.forEach(mesh => {
             mesh.setupGL(this.shaderProgram);
