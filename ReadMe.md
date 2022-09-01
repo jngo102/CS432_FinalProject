@@ -5,11 +5,27 @@
 
 ## Movement Instructions
 | Action        | Effect
-|--------------|--------------------------------------------------------------------------
-| W            | Move camera foward
-| A            | Move camera left
-| S            | Move camera right
-| D            | Move camera backward
+|---------------|--------------------------------------------------------------------------
+| W             | Move camera foward
+| A             | Move camera left
+| S             | Move camera right
+| D             | Move camera backward
+| Space         | Fly up
+| Shift         | Fly down
+
+## Viewing a Specific Celestial Body
+| Key        | Body
+|------------|--------------------------------------------------------------------------
+| 0          | Sun
+| 1          | Mercury
+| 2          | Venus
+| 3          | Earth
+| 4          | Mars
+| 5          | Jupiter
+| 6          | Saturn
+| 7          | Uranus
+| 8          | Neptune
+| 9          | Pluto
 
 Click canvas and move mouse to look around
 
