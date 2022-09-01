@@ -230,8 +230,8 @@ window.onload = function init() {
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);
     var n = vec3(0, 0, 1);
-    distanceCam = new Camera(vec3(100, 100, 100), u, v, n, 65, 16 / 9, 0.1, 1000);
-    distanceCam.lookAt(vec3(0, 0, 0));
+    planetCam = new Camera(vec3(100, 100, 100), u, v, n, 65, 16 / 9, 0.1, 1000);
+    planetCam.lookAt(vec3(0, 0, 0));
     shipCam = new Camera(vec3(0, 1, 0), u, v, n, 65, 16 / 9, 0.1, 1000);
     shipCam.vrp = vec3(0, 0, 108);
     var sunLight = new Light(
@@ -286,9 +286,8 @@ function logic(deltaTime) {
                 var bodyPos = body.getPosition();
                 cone.setPosition(bodyPos[0], bodyPos[1] + diameters[body.name] * 0.05 + 4, bodyPos[2]);
                 
-                distanceCam.setCameraVRP(vec3( bodyPos[0], bodyPos[1] + diameters[body.name] * 0.1, bodyPos[2] + diameters[body.name] * 0.05 ))
-                distanceCam.lookAt(bodyPos);
-                // distanceCam.lookAt(sun.getPosition())
+                planetCam.setCameraVRP(vec3(bodyPos[0], bodyPos[1] + diameters[body.name] * 0.1 + 0.25, bodyPos[2] + diameters[body.name] * 0.05));
+                planetCam.lookAt(bodyPos);
             }
         });  
     }
@@ -298,18 +297,29 @@ window.addEventListener("keydown", function(event) {
     if (!event.code.includes("Digit")) {
         return;
     }
+
     var digitCode = event.code;
     var index = parseInt(digitCode.replace("Digit", ""));
     // Skip Saturn's rings
     if (index > 6) {
         index++;
     }
-    var bodyName = bodies[index].name;
+
+    var body = bodies[index];
+
+    if (Camera.current == shipCam) {
+        Camera.current = planetCam;
+    } else if (Camera.current == planetCam && selectedBodyName == bodies[index].name) {
+        ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+        shipCam.setCameraVRP(planetCam.getCameraVRP());
+        shipCam.lookAt(body.getPosition());
+        Camera.current = shipCam;
+        return;
+    }
+
+    var bodyName = body.name;
     selectedBodyName = bodyName;
     
-    var selectedBody = bodies[index];
-    console.log(selectedBody)
-
     ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
     ctx.fillStyle = "#ffffff";
     ctx.textAlign = "left";
