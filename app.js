@@ -111,8 +111,8 @@ window.onload = function init() {
     }
 
     // Resize canvas to fit most of the window
-    canvas.width = canvas.clientWidth - 256;
-    canvas.height = canvas.clientHeight - 256;
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
     gl = canvas.getContext('webgl2');
     if (!gl) { alert("WebGL 2.0 isn't available"); }
 
