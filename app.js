@@ -286,7 +286,7 @@ function logic(deltaTime) {
                 var bodyPos = body.getPosition();
                 cone.setPosition(bodyPos[0], bodyPos[1] + diameters[body.name] * 0.05 + 4, bodyPos[2]);
                 
-                distanceCam.setCameraVRP(vec3( bodyPos[0], bodyPos[1] + diameters[body.name] * 0.1, bodyPos[2] + diameters[body.name] * 0.1 ))
+                distanceCam.setCameraVRP(vec3( bodyPos[0], bodyPos[1] + diameters[body.name] * 0.1, bodyPos[2] + diameters[body.name] * 0.05 ))
                 distanceCam.lookAt(bodyPos);
                 // distanceCam.lookAt(sun.getPosition())
             }

@@ -36,6 +36,8 @@ class InputManager {
                     this.inputActions.descend.isPressed = true;
                     this.inputActions.descend.wasPressed = true;
                     break;
+                case "KeyC":
+                    Camera.current = (Camera.current == shipCam ? distanceCam : shipCam);
             }
         });
 
