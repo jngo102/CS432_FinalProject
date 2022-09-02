@@ -88,21 +88,22 @@ class Mesh {
         this.projectionMatrixShader = gl.getUniformLocation(shaderProgram, "projectionMatrix");
 
         if (this.normals.length <= 0) {
-            console.log("This mesh does not have material or lighting properties.");
+            console.log("Normals are empty. This mesh does not have material or lighting properties.");
             this.lit = false;
             return;
         }
 
         this.normalBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, flatten(this.normals), gl.STATIC_DRAW);
         this.normalShader = gl.getAttribLocation(shaderProgram, "normal");
 
         if (this.normalShader == -1 || this.normalShader == null) {
-            console.log("This mesh does not have material or lighting properties.");
+            console.log("Normal attribute could be located. This mesh does not have material or lighting properties.");
             this.lit = false;
             return;
         }
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, flatten(this.normals), gl.STATIC_DRAW);
 
         this.matAmbientShader = gl.getUniformLocation(shaderProgram, "matAmbient");
         this.matDiffuseShader = gl.getUniformLocation(shaderProgram, "matDiffuse");

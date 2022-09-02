@@ -102,19 +102,6 @@ var planetRotations = {
 };
 
 var ctx;
-// var bodyInfo = {
-//     "Sun": "The Sun is the star at the center of the Solar System. It is a nearly perfect sphere of hot plasma, with internal convective motion that can accelerate the Sun in order to maintain its temperature. It is by far the most important source of energy for life on Earth. Its diameter is about 1.39 million kilometers, and its mass is about 330,000 times that of Earth, accounting for about 99.86% of the total mass of the Solar System.",
-//     "Mercury": "Mercury is the smallest and innermost planet in the Solar System. Its orbital period is 88 days, the shortest of all the planets in the Solar System. It is named after the Roman deity Mercury, the messenger of the gods.",
-//     "Venus": "Venus is the second planet from the Sun, orbiting it every 224.7 Earth days. It has the longest rotation period of any planet in the Solar System and rotates in the opposite direction to most other planets. It has no natural satellites. It is named after the Roman goddess of love and beauty.",
-//     "Earth": "Earth is the third planet from the Sun and the only object in the Universe known to harbor life. According to radiometric dating and other sources of evidence, Earth formed over 4.5 billion years ago. Earth's gravity interacts with other objects in space, especially the Sun and the Moon.",
-//     "Mars": "Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, after Mercury. In English, Mars is called 'the Red Planet' because the reddish iron oxide prevalent on its surface gives it a reddish appearance that is distinctive among the astronomical bodies visible to the naked eye.",
-//     "Jupiter": "Jupiter is the fifth planet from the Sun and the largest in the Solar System. It is a giant planet with a mass one-thousandth that of the Sun, but is two and a half times the mass of all the other planets in the Solar System combined. Jupiter is a gas giant; it is a gas giant because it is mostly hydrogen and helium.",
-//     "Saturn": "Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter. It is a gas giant with an average radius about nine times that of Earth. It has only one-eighth the average density of Earth, but with its larger volume, it is over twice as dense as Earth.",
-//     "Uranus": "Uranus is the seventh planet from the Sun. It has the third-largest planetary radius and fourth-largest planetary mass in the Solar System. Uranus is similar in composition to Neptune, and both have bulk chemical compositions which are similar to those of the other two giant planets in the Solar System, Neptune and Sun.",
-//     "Neptune": "Neptune is the eighth and farthest known planet from the Sun. In the Solar System, it is the fourth-largest planet by diameter, the third-most-massive planet, and the densest giant planet. Neptune is 17 times the mass of Earth and is slightly more massive than its near-twin Uranus.",
-//     "Pluto": "Pluto is the ninth and most distant planet from the Sun. It is a dwarf planet in the Kuiper belt, a ring of bodies beyond the orbit of the Sun. It was the first Kuiper belt object to be discovered. The name is a portmanteau of the words Pluto and dwarf.",
-// };
-
 var bodyInfo = {
     "Sun": "Mass: 1.99*10^30 kg\nDiamter: 1.39*10^6 km\nGravity: 274 m/s^2\nSurface temperature: 5800 K\nLength of day: 27 hours",
     "Mercury": "Mass: 33*10^23 kg\nDiameter: 4,879 km\nGravity: 3.7m/s^2\nDistance from Sun: 5.79*10^7 km\nLength of day: 4222.6 hours\nLength of year: 88 days",
@@ -127,8 +114,6 @@ var bodyInfo = {
     "Neptune": "Mass: 1.02*10^26 kg\nDiameter: 49,528 km\nGravity: 11.0m/s^2\nDistance from Sun: 4.498*10^12 km\nLength of day: 16.1 hours\nLength of year: 164.8 years",
     "Pluto": "Mass: 1.31*10^22 kg\nDiameter: 2,724 km\nGravity: 0.6m/s^2\nDistance from Sun: 5.9*10^12 km\nLength of day: 153.3 hours\nLength of year: 248.7 years",
 };
-
-var runTime = 0;
 
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas");
@@ -250,7 +235,7 @@ window.onload = function init() {
     var sunLight = new Light(
         vec3(0, 0, 0), 
         vec3(0, 0, 0),
-        vec4(0.25, 0.25, 0.25, 1), 
+        vec4(0.4, 0.4, 0.4, 1), 
         vec4(1, 1, 1, 1), 
         vec4(1, 1, 1, 1), 
         1, 128, 0, 1);
