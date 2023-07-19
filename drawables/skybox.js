@@ -134,12 +134,12 @@ class skyBox extends Drawable{
         if(skyBox.shaderProgram == -1){
             skyBox.initialize()
             var imagesSources = [
-                "../textures/skybox-ulukai/corona_rt.png",
-                "../textures/skybox-ulukai/corona_lf.png",
-                "../textures/skybox-ulukai/corona_up.png",         
-                "../textures/skybox-ulukai/corona_dn.png",                
-                "../textures/skybox-ulukai/corona_bk.png",
-                "../textures/skybox-ulukai/corona_ft.png",
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_rt.png",
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_lf.png",
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_up.png",         
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_dn.png",                
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_bk.png",
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_ft.png",
             ];           
             skyBox.loadCubemap(imagesSources);
         }
