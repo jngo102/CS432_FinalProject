@@ -60,7 +60,7 @@ class skyBox extends Drawable{
     static cubemap_image = 0;
     
     static initialize() {
-    	skyBox.shaderProgram = initShaders( gl, "https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/vshader-skybox.glsl", "https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/fshader-skybox.glsl");
+    	skyBox.shaderProgram = initShaders( gl, "https://jngo102.github.io/CS432_FinalProject/shaders/vshader-skybox.glsl", "https://jngo102.github.io/CS432_FinalProject/shaders/fshader-skybox.glsl");
 		
 	// Load the data into the GPU
 	skyBox.positionBuffer = gl.createBuffer();
@@ -134,12 +134,12 @@ class skyBox extends Drawable{
         if(skyBox.shaderProgram == -1){
             skyBox.initialize()
             var imagesSources = [
-                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_rt.png",
-                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_lf.png",
-                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_up.png",         
-                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_dn.png",                
-                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_bk.png",
-                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_ft.png",
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_rt.png",
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_lf.png",
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_up.png",         
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_dn.png",                
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_bk.png",
+                "https://jngo102.github.io/CS432_FinalProject/textures/skybox-ulukai/corona_ft.png",
             ];           
             skyBox.loadCubemap(imagesSources);
         }
