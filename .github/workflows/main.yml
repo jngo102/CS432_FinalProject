@@ -1,17 +1,25 @@
 name: Deploy to GitHub Pages
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: JamesIves/github-pages-deploy-action@4.1.0
-              with:
-                  branch: gh-pages
-                  folder: ./
-                  clean: true
-                  token: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    permissions:
+        pages: write
+        id-token: write
+    environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+            path: ./
+      - name: Deploy pages
+        id: deployment
+        uses: actions/deploy-pages@v2

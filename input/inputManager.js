@@ -92,7 +92,6 @@ class InputManager {
             var pWorld = mult(1 / pWorldUnscaled[3], pWorldUnscaled);
             var Q = Camera.current.vrp;
             var v = subtract(vec3(pWorld[0], pWorld[1], pWorld[2]), Q);
-            console.log("v = " + v);
             var smallestAlpha = Infinity;
             var closestBody = null;
             bodies.forEach((body) => {
@@ -112,8 +111,6 @@ class InputManager {
                         var d = dot(mult(-1, E), N);
                         var alpha = -((dot(Q, N) + d) / dot(v, N));
                         var P = add(Q, mult(alpha, v));
-                        // console.log("Intersection point on " + body.name + ": " + P);
-                        console.log("Alpha on " + body.name + ": " + alpha);
                         if (dot(v, N) == 0 || alpha <= 0 || alpha >= smallestAlpha) {
                             return;
                         } else if (alpha > 0) {
@@ -124,7 +121,6 @@ class InputManager {
                             var EP = subtract(P, E);
                             var crossProduct1 = cross(EF, EP);
                             var dotProduct1 = dot(triNorm, crossProduct1);
-                            console.log("dotProduct1 = " + dotProduct1);
 
                             if (dotProduct1 < 0) {
                                 return;
@@ -134,7 +130,6 @@ class InputManager {
                             var FP = subtract(P, F);
                             var crossProduct2 = cross(FG, FP);
                             var dotProduct2 = dot(triNorm, crossProduct2);
-                            console.log("dotProduct2 = " + dotProduct2);
 
                             if (dotProduct2 < 0) {
                                 return;
@@ -144,7 +139,6 @@ class InputManager {
                             var GP = subtract(P, G);
                             var crossProduct3 = cross(GE, GP);
                             var dotProduct3 = dot(triNorm, crossProduct3);
-                            console.log("dotProduct3 = " + dotProduct3);
 
                             if (dotProduct3 < 0) {
                                 return;

@@ -12,10 +12,7 @@ class ObjModel extends Drawable {
     parseMtl(mtlPath, vshader, fshader) {
         var mtlFile = loadFileAJAX(mtlPath);
         var mats = mtlFile.split('\r\n\r\nnewmtl ');
-        console.log(mats)
         mats.forEach((mat, matIndex) => {
-            console.log(mtlPath)
-            console.log(matIndex)
             if (matIndex <= 0) {
                 return;
             }

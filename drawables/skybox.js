@@ -102,7 +102,6 @@ class skyBox extends Drawable{
 
                 gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + skyBox.counter, 0, gl.RGB, this.width, this.height, 0, gl.RGB, gl.UNSIGNED_BYTE, skyBox.cubemap_image[skyBox.counter])
                 skyBox.counter++;
-                console.log(skyBox.counter)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
@@ -132,8 +131,6 @@ class skyBox extends Drawable{
     constructor(transform, scale, rotation ){ //TODO: addtexture path to constructor as argument
         // super(transform[0], transform[1], transform[2], scale, rotation[1], rotation[2], rotation[3]);
         super(0, 0, 0, scale, 0, 0, 0);
-        console.log(transform[0])
-        console.log(transform)
         if(skyBox.shaderProgram == -1){
             skyBox.initialize()
             var imagesSources = [
