@@ -11,4 +11,4 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-map_Kd ../textures/solar-system/Mercury.jpg
+map_Kd https://github.com/jngo102/CS432_FinalProject/tree/main/textures/solar-system/Mercury.jpg

@@ -143,87 +143,87 @@ window.onload = function init() {
     
     sun = new ObjModel(
         "Sun",
-        "../models/SolarSystem/Sun/Sun.obj",
-        "../models/SolarSystem/Sun/Sun.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Sun/Sun.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Sun/Sun.mtl",
         vec3(0, 0, 0),
         -0.1,
         vec3(0, 0, 0),
-        "../shaders/vshader-flat.glsl",
-        "../shaders/fshader-flat.glsl");
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/vshader-flat.glsl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/fshader-flat.glsl");
 
     mercury = new ObjModel(
         "Mercury",
-        "../models/SolarSystem/Mercury/Mercury.obj",
-        "../models/SolarSystem/Mercury/Mercury.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Mercury/Mercury.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Mercury/Mercury.mtl",
         vec3(orbitDistances["Mercury"], 0, 0),
         -0.1);
 
     venus = new ObjModel(
         "Venus",
-        "../models/SolarSystem/Venus/Venus.obj",
-        "../models/SolarSystem/Venus/Venus.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Venus/Venus.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Venus/Venus.mtl",
         vec3(orbitDistances["Venus"], 0, 0),
         -0.1);
 
     earth = new ObjModel(
         "Earth",
-        "../models/SolarSystem/Earth/Earth.obj", 
-        "../models/SolarSystem/Earth/Earth.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Earth/Earth.obj", 
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Earth/Earth.mtl",
         vec3(orbitDistances["Earth"], 0, 0), 
         -0.1);
 
     mars = new ObjModel(
         "Mars",
-        "../models/SolarSystem/Mars/Mars.obj", 
-        "../models/SolarSystem/Mars/Mars.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Mars/Mars.obj", 
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Mars/Mars.mtl",
         vec3(orbitDistances["Mars"], 0, 0), 
         -0.1);
     
     jupiter = new ObjModel(
         "Jupiter",
-        "../models/SolarSystem/Jupiter/Jupiter.obj",
-        "../models/SolarSystem/Jupiter/Jupiter.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Jupiter/Jupiter.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Jupiter/Jupiter.mtl",
         vec3(orbitDistances["Jupiter"], 0, 0), 
         -0.1);
 
     saturnBody = new ObjModel(
         "Saturn",
-        "../models/SolarSystem/Saturn/SaturnBody.obj",
-        "../models/SolarSystem/Saturn/SaturnBody.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Saturn/SaturnBody.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Saturn/SaturnBody.mtl",
         vec3(orbitDistances["Saturn"], 0, 0), 
         -0.1);
 
     saturnRings = new ObjModel(
         "Saturn",
-        "../models/SolarSystem/Saturn/SaturnRings.obj",
-        "../models/SolarSystem/Saturn/SaturnRings.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Saturn/SaturnRings.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Saturn/SaturnRings.mtl",
         vec3(orbitDistances["Saturn"], 0, 0),
         -0.1);
 
     uranus = new ObjModel(
         "Uranus",
-        "../models/SolarSystem/Uranus/Uranus.obj",
-        "../models/SolarSystem/Uranus/Uranus.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Uranus/Uranus.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Uranus/Uranus.mtl",
         vec3(orbitDistances["Uranus"], 0, 0), 
         -0.1);
 
     neptune = new ObjModel(
         "Neptune",
-        "../models/SolarSystem/Neptune/Neptune.obj",
-        "../models/SolarSystem/Neptune/Neptune.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Neptune/Neptune.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Neptune/Neptune.mtl",
         vec3(orbitDistances["Neptune"], 0, 0), 
         -0.1);
 
     pluto = new ObjModel(
         "Pluto",
-        "../models/SolarSystem/Pluto/Pluto.obj",
-        "../models/SolarSystem/Pluto/Pluto.mtl",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Pluto/Pluto.obj",
+        "https://github.com/jngo102/CS432_FinalProject/tree/main/models/SolarSystem/Pluto/Pluto.mtl",
         vec3(orbitDistances["Pluto"], 0, 0), 
         -0.1);
 
     bodies = [sun, mercury, venus, earth, mars, jupiter, saturnBody, saturnRings, uranus, neptune, pluto];
 
-    cone = new Cone(vec3(0, 0, 64), 2, vec3(0, 0, -90), "../shaders/vshader-flat.glsl", "../shaders/fshader-flat.glsl");
+    cone = new Cone(vec3(0, 0, 64), 2, vec3(0, 0, -90), "https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/vshader-flat.glsl", "https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/fshader-flat.glsl");
 
     var u = vec3(1, 0, 0);
     var v = vec3(0, 1, 0);

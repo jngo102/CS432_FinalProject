@@ -2,7 +2,7 @@ class ObjModel extends Drawable {
     faces = [];
     name = "";
     materialsMap = [];
-    constructor(name, objPath, mtlPath, position = vec3(0, 0, 0), scale = 1, rotation = vec3(0, 0, 0), vshader="../shaders/vshader.glsl", fshader="../shaders/fshader.glsl") {
+    constructor(name, objPath, mtlPath, position = vec3(0, 0, 0), scale = 1, rotation = vec3(0, 0, 0), vshader="https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/vshader.glsl", fshader="https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/fshader.glsl") {
         super(position[0], position[1], position[2], scale, rotation[0], rotation[1], rotation[2]);
         this.name = name;
         this.parseObj(objPath);

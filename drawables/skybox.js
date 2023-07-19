@@ -60,7 +60,7 @@ class skyBox extends Drawable{
     static cubemap_image = 0;
     
     static initialize() {
-    	skyBox.shaderProgram = initShaders( gl, "../shaders/vshader-skybox.glsl", "../shaders/fshader-skybox.glsl");
+    	skyBox.shaderProgram = initShaders( gl, "https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/vshader-skybox.glsl", "https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/fshader-skybox.glsl");
 		
 	// Load the data into the GPU
 	skyBox.positionBuffer = gl.createBuffer();
@@ -134,26 +134,12 @@ class skyBox extends Drawable{
         if(skyBox.shaderProgram == -1){
             skyBox.initialize()
             var imagesSources = [
-                // "../textures/skybox-cloudy-day/sky-right.jpg",
-                // "../textures/skybox-cloudy-day/sky-left.jpg",
-                // "../textures/skybox-cloudy-day/sky-top.jpg",
-                // "../textures/skybox-cloudy-day/sky-bottom.jpg",
-                // "../textures/skybox-cloudy-day/sky-front.jpg",  
-                // "../textures/skybox-cloudy-day/sky-back.jpg",
-
-                // "../textures/skybox-nebula/skybox_left.png",
-                // "../textures/skybox-nebula/skybox_right.png",
-                // "../textures/skybox-nebula/skybox_up.png",
-                // "../textures/skybox-nebula/skybox_down.png",
-                // "../textures/skybox-nebula/skybox_front.png",  
-                // "../textures/skybox-nebula/skybox_back.png",
-                
-                "../textures/skybox-ulukai/corona_rt.png",
-                "../textures/skybox-ulukai/corona_lf.png",
-                "../textures/skybox-ulukai/corona_up.png",         
-                "../textures/skybox-ulukai/corona_dn.png",                
-                "../textures/skybox-ulukai/corona_bk.png",
-                "../textures/skybox-ulukai/corona_ft.png",
+                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_rt.png",
+                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_lf.png",
+                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_up.png",         
+                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_dn.png",                
+                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_bk.png",
+                "https://github.com/jngo102/CS432_FinalProject/tree/main/textures/skybox-ulukai/corona_ft.png",
             ];           
             skyBox.loadCubemap(imagesSources);
         }

@@ -1,5 +1,5 @@
 class Cone extends Drawable {
-    constructor(transform, scale, rotation, vshader="../shaders/vshader.glsl", fshader="../shaders/fshader.glsl") {
+    constructor(transform, scale, rotation, vshader="https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/vshader.glsl", fshader="https://github.com/jngo102/CS432_FinalProject/tree/main/shaders/fshader.glsl") {
         super(transform[0], transform[1], transform[2], scale, rotation[0], rotation[1], rotation[2]);
 
         this.initialize(vshader, fshader);
