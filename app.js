@@ -143,8 +143,8 @@ window.onload = function init() {
     
     sun = new ObjModel(
         "Sun",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Sun/Sun.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Sun/Sun.mtl",
+        "../models/SolarSystem/Sun/Sun.obj",
+        "../models/SolarSystem/Sun/Sun.mtl",
         vec3(0, 0, 0),
         -0.1,
         vec3(0, 0, 0),
@@ -153,71 +153,71 @@ window.onload = function init() {
 
     mercury = new ObjModel(
         "Mercury",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Mercury/Mercury.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Mercury/Mercury.mtl",
+        "../models/SolarSystem/Mercury/Mercury.obj",
+        "../models/SolarSystem/Mercury/Mercury.mtl",
         vec3(orbitDistances["Mercury"], 0, 0),
         -0.1);
 
     venus = new ObjModel(
         "Venus",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Venus/Venus.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Venus/Venus.mtl",
+        "../models/SolarSystem/Venus/Venus.obj",
+        "../models/SolarSystem/Venus/Venus.mtl",
         vec3(orbitDistances["Venus"], 0, 0),
         -0.1);
 
     earth = new ObjModel(
         "Earth",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Earth/Earth.obj", 
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Earth/Earth.mtl",
+        "../models/SolarSystem/Earth/Earth.obj", 
+        "../models/SolarSystem/Earth/Earth.mtl",
         vec3(orbitDistances["Earth"], 0, 0), 
         -0.1);
 
     mars = new ObjModel(
         "Mars",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Mars/Mars.obj", 
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Mars/Mars.mtl",
+        "../models/SolarSystem/Mars/Mars.obj", 
+        "../models/SolarSystem/Mars/Mars.mtl",
         vec3(orbitDistances["Mars"], 0, 0), 
         -0.1);
     
     jupiter = new ObjModel(
         "Jupiter",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Jupiter/Jupiter.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Jupiter/Jupiter.mtl",
+        "../models/SolarSystem/Jupiter/Jupiter.obj",
+        "../models/SolarSystem/Jupiter/Jupiter.mtl",
         vec3(orbitDistances["Jupiter"], 0, 0), 
         -0.1);
 
     saturnBody = new ObjModel(
         "Saturn",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Saturn/SaturnBody.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Saturn/SaturnBody.mtl",
+        "../models/SolarSystem/Saturn/SaturnBody.obj",
+        "../models/SolarSystem/Saturn/SaturnBody.mtl",
         vec3(orbitDistances["Saturn"], 0, 0), 
         -0.1);
 
     saturnRings = new ObjModel(
         "Saturn",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Saturn/SaturnRings.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Saturn/SaturnRings.mtl",
+        "../models/SolarSystem/Saturn/SaturnRings.obj",
+        "../models/SolarSystem/Saturn/SaturnRings.mtl",
         vec3(orbitDistances["Saturn"], 0, 0),
         -0.1);
 
     uranus = new ObjModel(
         "Uranus",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Uranus/Uranus.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Uranus/Uranus.mtl",
+        "../models/SolarSystem/Uranus/Uranus.obj",
+        "../models/SolarSystem/Uranus/Uranus.mtl",
         vec3(orbitDistances["Uranus"], 0, 0), 
         -0.1);
 
     neptune = new ObjModel(
         "Neptune",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Neptune/Neptune.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Neptune/Neptune.mtl",
+        "../models/SolarSystem/Neptune/Neptune.obj",
+        "../models/SolarSystem/Neptune/Neptune.mtl",
         vec3(orbitDistances["Neptune"], 0, 0), 
         -0.1);
 
     pluto = new ObjModel(
         "Pluto",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Pluto/Pluto.obj",
-        "https://jngo102.github.io/CS432_FinalProject/models/SolarSystem/Pluto/Pluto.mtl",
+        "../models/SolarSystem/Pluto/Pluto.obj",
+        "../models/SolarSystem/Pluto/Pluto.mtl",
         vec3(orbitDistances["Pluto"], 0, 0), 
         -0.1);
 
